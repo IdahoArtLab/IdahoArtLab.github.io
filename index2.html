@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Idaho Art Lab is a nonprofit makerspace providing community access to art studios, tools, events, and workshops." />
+  <title>Idaho Art Lab | Community Art & Makerspace</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* Vertical Event List */
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .event-item {
+    background: var(--background);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    box-shadow: var(--shadow);
+  }
+
+  /* Improved Membership Section */
+  .membership-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .membership-benefits {
+    margin: 1.5rem 0;
+    list-style: none;
+  }
+
+  .membership-benefits li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .cta-button {
+    background: #22c55e;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+
+  .membership-image {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  @media (max-width: 768px) {
+    .membership-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .membership-image {
+      order: -1;
+    }
+  }
+</style>
+
+
+
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --accent: #3b82f6;
+      --background: #f8fafc;
+      --white: #ffffff;
+      --text: #1f2937;
+      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    nav {
+      background: var(--primary);
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #c7d2fe;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    section {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow);
+    }
+
+    section h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      margin-top: 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--background);
+      padding: 1.2rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.8rem 1.6rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    footer a {
+      color: #c7d2fe;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Idaho Art Lab</h1>
+    <p>Where Creativity Meets Community</p>
+  </header>
+
+  <nav>
+    <a href="#events">Events</a>
+    <a href="#facilities">Studios</a>
+    <a href="#membership">Membership</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main class="container">
+
+    <section id="about">
+      <h2>Welcome!</h2>
+      <p>The Idaho Art Lab is a 501(c)(3) nonprofit makerspace located in St. Anthony, Idaho. We provide residents and rural creatives with access to art studios, fabrication labs, and learning opportunities—empowering lifelong creativity through affordable tools and training.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Idaho Art Lab tour" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section id="events">
+  <h2>Upcoming Events</h2>
+  <div class="event-list">
+    <div class="event-item">
+      <h3>Aug 12: Pottery Throwdown</h3>
+      <p>Compete in our friendly pottery competition with clay & wheels provided. Prizes for most creative pieces!</p>
+    </div>
+    <div class="event-item">
+      <h3>Aug 18: Figure Drawing Night</h3>
+      <p>Live model session with 2-minute to 20-minute poses. Charcoal and paper provided.</p>
+    </div>
+    <div class="event-item">
+      <h3>Sept 2: Community Mural Day</h3>
+      <p>Help paint a 30ft outdoor mural celebrating Idaho's landscape. All skill levels welcome.</p>
+    </div>
+    <div class="event-item">
+      <h3>Sept 14: Lapidary Basics</h3>
+      <p>Learn stone cutting and polishing techniques using our diamond wheels and grinding equipment.</p>
+    </div>
+    <div class="event-item">
+      <h3>Sept 28: Printmakers Social</h3>
+      <p>Collaborative print exchange using our etching presses and linoleum blocks. Bring your own paper or use ours.</p>
+    </div>
+  </div>
+  <a href="https://calendar.google.com/calendar/embed?src=info%40idahoartlab.org" class="button" target="_blank">View Full Calendar</a>
+</section>
+
+    <section id="facilities">
+  <h2>Studios & Labs</h2>
+  <div class="grid">
+    <!-- Ceramics Studio -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Ceramics+Studio" alt="Ceramics Studio" loading="lazy">
+      <h3>Ceramics Studio</h3>
+      <p>We offer hundreds of ceramic bisque ware to paint or glaze. Access our 1,500+ casting molds inventory through our digital database.</p>
+    </div>
+
+    <!-- Pottery Studio -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Pottery+Wheels" alt="Pottery Studio" loading="lazy">
+      <h3>Pottery Studio</h3>
+      <p>11 electric wheels, 1 adult kick wheel, slab roller & extruder. Fire to Cone 10 with electric/gas kilns. Clay: $5/5lb bag.</p>
+    </div>
+
+    <!-- Sculpture Lab -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Sculpture+Lab" alt="Sculpture Lab" loading="lazy">
+      <h3>Sculpture Lab</h3>
+      <p>3 ergonomic electric sculptor's tables & 6 adjustable stands. Clay available ($5/5lb). Kiln rental by inch or full load.</p>
+    </div>
+
+    <!-- Drawing & Painting -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Art+Studio" alt="Drawing Studio" loading="lazy">
+      <h3>Drawing & Painting</h3>
+      <p>Free public access with 4ft light table, easels, projectors, and large format paper cutters. Open daily 9AM-9PM.</p>
+    </div>
+
+    <!-- Cartoon Animation -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Animation+Station" alt="Animation" loading="lazy">
+      <h3>Cartoon Animation</h3>
+      <p>Light table, copy stand, and digital stations. Rent animation software packages hourly or weekly.</p>
+    </div>
+
+    <!-- Lapidary -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Stone+Workshop" alt="Lapidary" loading="lazy">
+      <h3>Lapidary</h3>
+      <p>Slabbing saws, trim saws & polishing wheels. Create cabochons from local stones or imported materials.</p>
+    </div>
+
+    <!-- Faceting -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Gem+Faceting" alt="Faceting" loading="lazy">
+      <h3>Faceting</h3>
+      <p>Guided sessions on Ultra Tec faceting machines. Bring your own gemstones or use our practice materials.</p>
+    </div>
+
+    <!-- Lost Wax Casting -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Jewelry+Lab" alt="Metal casting" loading="lazy">
+      <h3>Lost Wax Casting</h3>
+      <p>Centrifuge casting station with 6 jewelers benches. Bronze, silver & aluminum alloys available.</p>
+    </div>
+
+    <!-- Screen Printing -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Print+Shop" alt="Screen Printing" loading="lazy">
+      <h3>Screen Printing</h3>
+      <p>90 screens & 4-color T-shirt press. Photo emulsion setup for detailed serigraphs. Bring your own shirts or paper.</p>
+    </div>
+
+    <!-- Block Printing -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Printmaking" alt="Block Printing" loading="lazy">
+      <h3>Block Printing</h3>
+      <p>Linoleum blocks, brayers & book press. Try gelatin plate monoprinting with our Speedball setup.</p>
+    </div>
+
+    <!-- Computer Arts -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Digital+Lab" alt="Computer Lab" loading="lazy">
+      <h3>Computer Arts Lab</h3>
+      <p>Adobe Creative Cloud, 3D rendering & video editing. Includes 10ft green screen & sound booth.</p>
+    </div>
+
+    <!-- Darkroom -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Darkroom" alt="Photography" loading="lazy">
+      <h3>Photography Darkroom</h3>
+      <p>Process 4x5" negatives & print up to 16x20". Chemistry provided - bring your own paper or purchase onsite.</p>
+    </div>
+
+    <!-- Vacuum Forming -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Vacuum+Forming" alt="Plastic forming" loading="lazy">
+      <h3>Vacuum Forming</h3>
+      <p>Form plastic/silicone up to 4x4ft. Bake vinyl onto metal for signs & functional art pieces.</p>
+    </div>
+
+    <!-- Wood Working -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x250.webp?text=Wood+Shop" alt="Woodworking" loading="lazy">
+      <h3>Wood Working</h3>
+      <p>Scroll saw, hand tools & flex shafts. Stock wood available or bring your own materials for carving.</p>
+    </div>
+  </div>
+</section>
+
+    <section id="membership">
+  <div class="membership-grid">
+    <div class="membership-content">
+      <h2>Become a Member</h2>
+      <p>Join our creative community with benefits including:</p>
+      <ul class="membership-benefits">
+        <li>✅ 24/7 access to all studios & equipment</li>
+        <li>✅ 50% off workshop enrollment</li>
+        <li>✅ Free kiln firing credits monthly</li>
+        <li>✅ Member-only social events</li>
+        <li>✅ Discounted clay & materials</li>
+      </ul>
+      <a href="#contact" class="button cta-button">Join Now</a>
+    </div>
+    <img 
+      src="https://via.placeholder.com/600x400.webp?text=Creative+Community" 
+      alt="Art Lab Members Working" 
+      class="membership-image"
+      loading="lazy">
+  </div>
+</section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>📍 2355 S Yellowstone Hwy, St. Anthony, ID 83445</p>
+      <p>📧 Email: <a href="mailto:info@idahoartlab.org">info@idahoartlab.org</a></p>
+      <p>📞 Phone: (208) 932-0893</p>
+
+     <div style="max-width: 100%; border-radius: 8px; overflow: hidden; margin: 1.5rem 0;">
+  <iframe
+    src="https://maps.google.com/maps?q=2355%20S%20Yellowstone%20Hwy%2C%20St.%20Anthony%2C%20ID%2083445&t=&z=15&ie=UTF8&iwloc=&output=embed"
+    width="100%"
+    height="400"
+    frameborder="0"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+
+
+      <p style="margin-top: 1.5rem;">
+  <a href="https://facebook.com/idahoartlab" class="button" target="_blank">Facebook</a>
+  <a href="https://instagram.com/idahoartlab" class="button" target="_blank">Instagram</a>
+  <a href="http://www.flickr.com/photos/idahoartlab/albums" class="button" target="_blank">Flickr</a>
+  <a href="https://www.youtube.com/@idahoartlab" class="button" target="_blank">YouTube</a>
+</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Idaho Art Lab</p>
+    <p>
+      <a href="https://idahoartlab.github.io/" target="_blank">GitHub Info Site</a> |
+      <a href="https://idahoartlab.org" target="_blank">Official Website</a>
+    </p>
+  </footer>
+
+</body>
+</html>
