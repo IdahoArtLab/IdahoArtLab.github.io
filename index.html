@@ -3,177 +3,526 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idaho Art Lab - A place to make, create, learn, and share</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
+    <title>Idaho Art Lab - Create, Learn, and Connect</title>
+    <style>
+        /* --- CSS Reset & Basic Styles --- */
+        :root {
+            --primary-blue: #0A3D62; /* Deep, dark blue for headings */
+            --secondary-blue: #3C6382; /* Softer, slate blue for backgrounds/accents */
+            --accent-color: #60A3D9; /* Brighter, friendly blue for buttons and links */
+            --light-bg: #F4F7F5;   /* Very light grey for main background */
+            --dark-text: #2c3e50;  /* Standard dark slate text color */
+            --light-text: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        h1 { font-size: 3.5rem; line-height: 1.1; }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 2.5rem; }
+        h3 { font-size: 1.4rem; }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+
+        .btn-primary:hover {
+            background-color: #5292c7; /* Slightly darker accent blue */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background-color: rgba(244, 247, 245, 0.9); /* Translucent light grey */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(10, 61, 98, 0.7), rgba(10, 61, 98, 0.5)), url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-text);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero-content h1 {
+            color: var(--light-text);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- About Section --- */
+        #about {
+            background-color: #fff;
+        }
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        .about-text { flex: 1; }
+        
+        .about-video {
+            flex: 1;
+            max-width: 560px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .about-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- Labs/Offerings Section --- */
+        #labs {
+            background-color: var(--light-bg);
+        }
+        .labs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .lab-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .lab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .lab-card img { width: 100%; height: 200px; object-fit: cover; }
+        .lab-card-content { padding: 1.5rem; flex-grow: 1; }
+        .lab-card-content h3 { margin-top: 0; }
+
+        /* --- Events Section --- */
+        #events {
+             background-color: #fff;
+        }
+        .events-calendar-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: relative;
+            padding-top: 75%; /* Aspect ratio for calendar */
+        }
+        
+        .events-calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- Visit Us / Map Section --- */
+        #location {
+            background-color: var(--light-bg);
+        }
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .map-container iframe {
+            display: block;
+            width: 100%;
+            height: 450px;
+            border: 0;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            background-color: var(--dark-text);
+            color: var(--light-bg);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .main-footer .container p { margin-bottom: 0.5rem; }
+        .footer-socials { margin-top: 1rem; }
+        .footer-socials a { color: var(--light-bg); margin: 0 10px; font-size: 1.5rem; text-decoration: none; transition: color 0.3s; }
+        .footer-socials a:hover { color: var(--accent-color); }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 992px) {
+            .about-content { flex-direction: column; text-align: center; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background-color: var(--light-bg);
+                text-align: center;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 1rem 0; }
+            .hamburger { display: flex; }
+            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .bar:nth-child(2) { opacity: 0; }
+            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav-container">
-            <div class="logo">Idaho Art Lab</div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#events">Events</a>
-                <a href="#resources">Resources</a>
-                <a href="#join" class="cta-button">Join Now</a>
+
+    <header class="main-header">
+        <nav class="navbar container">
+            <a href="#" class="logo">Idaho Art Lab</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#labs">Labs</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#location">Visit Us</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
             <div class="hero-content">
-                <h1>Welcome to the Idaho Art Lab</h1>
-                <p class="hero-subtitle">Idaho's Community-Driven Hackerspace & Makerspace</p>
-                <a href="#join" class="cta-button">Become a Member</a>
+                <h1>A Creative Hub for Everyone</h1>
+                <p>Explore your creativity a our volunteer-run makerspace. We provide the tools, space, and community to bring your ideas to life.</p>
+                <a href="#events" class="btn btn-primary">See What's Happening</a>
             </div>
         </section>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2>Our Community</h2>
-                <p>The Idaho Art Lab is more than just a space—it's a thriving community of makers, builders, artists, DIYers, and tech enthusiasts. We believe in fostering an open, inclusive environment where creativity and innovation flourish through collaboration and shared knowledge.</p>
-                <div class="features-grid">
-                    <div class="feature">
-                        <h3>Open to All</h3>
-                        <p>Free access for group and club meetings. Free to attend classes and meetups. Everyone is welcome!</p>
-                    </div>
-                    <div class="feature">
-                        <h3>24/7 Access</h3>
-                        <p>Members get round-the-clock access to all facilities and equipment.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Community First</h3>
-                        <p>Build connections, share knowledge, and grow together.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Non-Profit</h3>
-                        <p>Run by the community, for the community.</p>
-                    </div>
-
-                    <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Idaho Art Lab tour" allowfullscreen></iframe>
-      </div>
+        <!-- About Us Section -->
+        <section id="about">
+            <div class="container about-content">
+                <div class="about-text">
+                    <h2>The Place to Be for Visual Arts</h2>
+                    <p>The Idaho Art Lab is a non-profit, volunteer-run makerspace dedicated to giving our community a place to learn and create. From ceramics to digital design, we provide affordable access to tools and knowledge.</p>
+                    <p>Our mission is to make the arts a part of daily life for everyone. Whether you're a seasoned artist or a curious beginner, you'll find a welcoming space and a supportive community here.</p>
+                </div>
+                 <div class="about-video">
+                    <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
 
-        <section id="resources" class="resources">
+        <!-- Our Labs Section -->
+        <section id="labs">
             <div class="container">
-                <h2>Our Resources</h2>
-                <div class="resources-grid">
-                    <div class="resource">
-                        <img src="images/workshop.jpg" alt="Workshop Area">
-                        <h3>Workshop</h3>
-                        <p>Fully equipped woodworking and metalworking shop</p>
-                    </div>
-                    <div class="resource">
-                        <img src="images/3d-printing.jpg" alt="3D Printing Lab">
-                        <h3>3D Printing Lab</h3>
-                        <p>Multiple 3D printers and scanning equipment</p>
-                    </div>
-                    <div class="resource">
-                        <img src="images/studio.jpg" alt="Recording Studio">
-                        <h3>Recording Studio</h3>
-                        <p>Professional audio and video recording facilities</p>
-                    </div>
-                    <div class="resource">
-                        <img src="images/coworking.jpg" alt="Coworking Space">
-                        <h3>Coworking Space</h3>
-                        <p>Comfortable area for working and collaboration</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="events" class="events">
-            <div class="container">
-                <div class="events-wrapper">
-                    
-                    <div class="upcoming-events">
-                        <h2>Upcoming Events</h2>
-                        <div class="event">
-                            <h3>Welding Fundamentals</h3>
-                            <p>Basic welding techniques for beginners</p>
-                            <span class="date">February 12, 2025</span>
-                        </div>
-                        <div class="event">
-                            <h3>Pottery Night</h3>
-                            <p>Tour the space and meet our community</p>
-                            <span class="date">July 20, 2025</span>
+                <h2>Explore the Labs</h2>
+                <div class="labs-grid">
+                    <!-- Ceramics Studio -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1605327221297-3c3558778f69?q=80&w=2070&auto=format&fit=crop" alt="Shelves full of unfinished white ceramic bisque ware">
+                        <div class="lab-card-content">
+                             <h3>Ceramics Studio</h3>
+                             <p>We offer hundreds of ceramic bisque ware to paint or glaze. The ~1,500+ casting molds inventory is in a database so you have access to ALL of our inventory, not just the bisque ware we have room to display.</p>
                         </div>
                     </div>
+                    <!-- Pottery Studio -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1554692918-08fa7a4542a9?q=80&w=1965&auto=format&fit=crop" alt="A pottery studio with numerous electric wheels">
+                        <div class="lab-card-content">
+                            <h3>Pottery Studio</h3>
+                            <p>We have 11 electric pottery wheels, 1 adult kick wheel, a slab roller & extruder. We can fire to Cone 10 with electric or gas kilns and have a raku kiln in the kiln shelter. We sell clay in 5 lb. bags.</p>
+                        </div>
+                    </div>
+                    <!-- Sculpture Lab -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1581338873032-159676748443?q=80&w=1974&auto=format&fit=crop" alt="A clay sculpture of a head being worked on">
+                        <div class="lab-card-content">
+                            <h3>Sculpture Lab</h3>
+                             <p>Use one of the 3 ergonomic electric sculptor's tables or 6 sculpture stands to raise & lower your sculpture base. We sell clay in 5 lb. bags and can fire your works by-the-inch or kiln rental.</p>
+                        </div>
+                    </div>
+                    <!-- Drawing & Painting -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop" alt="An artist's painting studio with an easel and paints">
+                        <div class="lab-card-content">
+                            <h3>Drawing & Painting</h3>
+                             <p>Free and open to the public. Use our 4 ft. light table, a straight-edge board, easels (standing, bench or tabletop), overhead projector, paper cutters and large project tables.</p>
+                        </div>
+                    </div>
+                    <!-- Cartoon Animation -->
+                     <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1617953141933-aab2a1599a8e?q=80&w=2070&auto=format&fit=crop" alt="A workstation with a tablet displaying digital animation software">
+                        <div class="lab-card-content">
+                             <h3>Cartoon Animation</h3>
+                             <p>A large light table is set up next to a copy stand and computer digitizing station. You can also rent a complete Digital Cartoon Animation Station.</p>
+                        </div>
+                    </div>
+                    <!-- Lapidary -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1620535948950-744a5d7c046e?q=80&w=1974&auto=format&fit=crop" alt="Colorful polished stones and gems">
+                        <div class="lab-card-content">
+                             <h3>Lapidary</h3>
+                             <p>Our lapidary lab includes equipment for stone slabbing, trimming, grinding, and polishing to create beautiful cabochons and finished stones.</p>
+                        </div>
+                    </div>
+                     <!-- Faceting -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1610422952873-4554c86515f4?q=80&w=1974&auto=format&fit=crop" alt="A precisely cut and faceted gemstone">
+                        <div class="lab-card-content">
+                             <h3>Faceting</h3>
+                             <p>Let our Faceter guide you in cutting & polishing facets (angle cuts) into precious gemstones or glass to bring out their inner brilliance.</p>
+                        </div>
+                    </div>
+                    <!-- Lost Wax Metal Casting -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1620656220731-552417937397?q=80&w=1964&auto=format&fit=crop" alt="Jewelry making tools on a workbench">
+                        <div class="lab-card-content">
+                             <h3>Lost Wax Metal Casting</h3>
+                             <p>Create intricate jewelry or small sculptures in metal. We have 6 jewelers benches and use a centrifuge method for high-quality casting.</p>
+                        </div>
+                    </div>
+                    <!-- Screen Printing -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1623861875704-508549e04918?q=80&w=1974&auto=format&fit=crop" alt="A person using a squeegee to screen print a design">
+                        <div class="lab-card-content">
+                             <h3>Screen Printing</h3>
+                             <p>Featuring photo emulsion tables, a 4 ft. vacuum table, 90+ screens, and a 4-color T-Shirt press for fine art serigraphs or apparel.</p>
+                        </div>
+                    </div>
+                     <!-- Block Printing -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1633596956241-995a56ea7437?q=80&w=2070&auto=format&fit=crop" alt="Linoleum block carving tools and ink">
+                        <div class="lab-card-content">
+                             <h3>Block & Monoprinting</h3>
+                             <p>Carve into lino blocks, use our brayers, glass surfaces, and book press. You can also try out Speedball gelatin plate printing for unique monoprints.</p>
+                        </div>
+                    </div>
+                     <!-- Computer Arts / Media Production -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" alt="A computer with creative software on the screen and a green screen behind it">
+                        <div class="lab-card-content">
+                             <h3>Computer & Media Lab</h3>
+                             <p>We teach Photoshop, Adobe Creative Suite, and 3D Rendering. A 10 ft. green screen is available for video, plus a sound booth for voice-overs.</p>
+                        </div>
+                    </div>
+                    <!-- Photography Darkroom -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1598555762612-4e12a6473b8e?q=80&w=2070&auto=format&fit=crop" alt="Photographs hanging to dry in a darkroom with a red safelight glow">
+                        <div class="lab-card-content">
+                             <h3>Photography Darkroom</h3>
+                             <p>Our large format photography darkroom offers developing of black & white negatives up to 4" x 5" and prints up to 16" x 20".</p>
+                        </div>
+                    </div>
+                     <!-- Vacuum Forming / Vinyl Baking -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1618035812975-690e0b37d43a?q=80&w=2062&auto=format&fit=crop" alt="Abstract sheets of colored plastic">
+                        <div class="lab-card-content">
+                             <h3>Vacuum Forming / Vinyl Baking</h3>
+                             <p>Form plastic, silicone, or vinyl sheets up to 4x4 feet. You can also bake vinyl onto metal for durable, custom finishes.</p>
+                        </div>
+                    </div>
+                     <!-- Wood Working -->
+                    <div class="lab-card">
+                        <img src="https://images.unsplash.com/photo-1595183241414-d9263a201620?q=80&w=1964&auto=format&fit=crop" alt="A person using a scroll saw to cut a detailed pattern in wood">
+                        <div class="lab-card-content">
+                             <h3>Wood Working</h3>
+                             <p>Our wood shop is equipped for detailed carving and cutting. We have a scroll saw, hand saws, and flex shafts available for wood carving projects.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="join" class="join">
+        <!-- Events Section -->
+        <section id="events">
             <div class="container">
-                <h2>Join Our Community</h2>
-                <p class="join-description">Become part of Idaho's most active maker community. Get 24/7 access to shared resources and join a network of creative individuals.</p>
-               <iframe src="https://www.google.com/calendar/embed?title=Regional%20Art%20Events%20(for%20East%20%26%20South%20East%20Idaho)&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=info%40idahoartlab.org&amp;color=%2342104A&amp;src=iuao6obijaooogannkpbfkd9d0%40group.calendar.google.com&amp;color=%23060D5E&amp;src=accmcfhfq0ubllf4tumjcgj9i0%40group.calendar.google.com&amp;color=%23125A12&amp;src=1nnln3lfbrtomve79hoem021eo%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=24qo0t4ek3d147q8b8bq5vrav4%40group.calendar.google.com&amp;color=%238C500B&amp;src=shtiltihuvbjk60euma4k5ji6c%40group.calendar.google.com&amp;color=%23711616&amp;src=kgtjqvsfjdv70kcthaj3m6b4qk%40group.calendar.google.com&amp;color=%237A367A&amp;src=4s2785044ffp411k1keu3l6hes%40group.calendar.google.com&amp;color=%235A6986&amp;src=kb1ehq1121830e6c9qo4p4s08s%40group.calendar.google.com&amp;color=%230D7813&amp;src=ovscs4ubs1eeot0stpsn3fac1s%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=8d0blmu1jhi120ff6o709vrpgs%40group.calendar.google.com&amp;color=%23BE6D00&amp;src=sielcsmcqrgokr4aj3lhn1i8mk%40group.calendar.google.com&amp;color=%23A32929&amp;src=dj7m11bbjdddka10etblsvnk40%40group.calendar.google.com&amp;color=%23333333&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%236B3304&amp;ctz=America%2FDenver" style=" border-width:0 " width="800" height="700" frameborder="0" scrolling="No"></iframe>
-
-                <div class="membership-options">
-                    <div class="membership-card">
-                        <h3>Free Access</h3>
-                        <ul>
-                            <li>Community Events</li>
-                            <li>Club meetups</li>
-                            <li>Hangouts</li>
-                        </ul>
-                        <a href="#" class="cta-button">Visit During Open Hours</a>
-                    </div>
-                    <div class="membership-card featured">
-                        <h3>Full Membership</h3>
-                        <ul>
-                            <li>24/7 Building Access</li>
-                            <li>All Tools & Resources</li>
-                            <li>Storage Space</li>
-                            <li>Member Events</li>
-                            <li>Community Support</li>
-                        </ul>
-                        <a href="#" class="cta-button">Become a Member</a>
-                    </div>
+                <h2>Upcoming Workshops & Events</h2>
+                <p style="text-align:center; max-width: 700px; margin: 0 auto 2.5rem auto;">Our schedule is always up-to-date. See our workshops, classes, and open lab hours below. Click on an event to see more details and register.</p>
+                <div class="events-calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&bgcolor=%23ffffff&mode=MONTH&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%2309d67a" style="border:solid 1px #777"></iframe>
                 </div>
-                       </div>
-            <div style="max-width: 100%; border-radius: 8px; overflow: hidden; margin: 1.5rem 0;">
-  <iframe
-    src="https://maps.google.com/maps?q=2355%20S%20Yellowstone%20Hwy%2C%20St.%20Anthony%2C%20ID%2083445&t=&z=15&ie=UTF8&iwloc=&output=embed"
-    width="100%"
-    height="400"
-    frameborder="0"
-    style="border:0;"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
+            </div>
+        </section>
+        
+        <!-- Visit Us Section -->
+        <section id="location">
+            <div class="container">
+                <h2>Visit Our Makerspace</h2>
+                 <p style="text-align:center; max-width: 700px; margin: 0 auto 2.5rem auto;">We're located in St. Anthony, Idaho. Come say hello during our open hours! You can find us at the address below.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2838.742445103444!2d-111.6914594236923!3d43.96323492809115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53545464506c2957%3A0x1d75f2c2535dd9a2!2sIdaho%20Art%20Lab!5e0!3m2!1sen!2sus!4v1719625345758!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="footer">
+    <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Location</h3>
-                    <p>2355 S. Yellowstone Hwy.,<br>St. Anthony, Idaho 83445</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Public Hours</h3>
-                    <p>Mon-Fri: 2pm-7pm<br>Sat-Sun: 10am-8pm</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>info@idahoartlab.org<br>(208) 932-0893</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 IdahoArtLab. All rights reserved.</p>
+            <p>&copy; 2024 Idaho Art Lab. A 501(c)(3) Non-Profit Organization.</p>
+            <p>2355 S. Wildcat Way, St. Anthony, ID 83445</p>
+            <div class="footer-socials">
+                <!-- Replace # with actual social media links -->
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="Instagram">IG</a>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Simple JavaScript for Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                 navLinks.classList.remove('active');
+                 hamburger.classList.remove('active');
+            });
+        });
+    </script>
+
 </body>
 </html>
