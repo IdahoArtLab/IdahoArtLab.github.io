@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Make a Payment - Idaho Art Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font Optimization: Preconnect to Google Fonts servers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+  :root{--teal:#007a86;--teal-dark:#005a63;--grey-500:#555;--grey-300:#eaeaea;--border:#d1d1d1;}
+  *,*:before,*:after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;padding-top:70px;font-family:Lato,sans-serif;color:var(--grey-500);line-height:1.6;}
+  body.menu-open{overflow:hidden;}
+  a{text-decoration:none;color:inherit;}
+  p{margin-bottom:1rem;}
+  hr{border:none;border-top:1px solid var(--border);margin:2.5rem 0;}
+  section{padding:4rem 8vw;}
+  .bg-grey{background:var(--grey-300);}
+  h2{font-size:2.5rem;font-weight:400;text-align:center;margin-top:0;margin-bottom:1rem;color:var(--teal);}
+  h3{text-align:center;color:var(--teal-dark);margin-top:0;font-weight:700;}
+  .btn-primary{background:var(--teal);padding:.85rem 2rem;color:#fff;border:none;border-radius:3px;font-size:1rem;letter-spacing:.02em;cursor:pointer;display:inline-block;margin-top:1rem;text-align:center;transition:background-color .3s;}
+  .btn-primary:hover{background:var(--teal-dark);}
+  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;box-shadow:0 2px 4px rgba(0,0,0,.07);}
+  #brand{font-size:1.5rem;font-weight:700;color:var(--teal);}
+  nav ul{list-style:none;margin:0;padding:0;display:inline-flex;gap:1.5rem;}
+  nav ul li a{font-weight:400;color:var(--grey-500);transition:color .3s;}
+  nav ul li a:hover{color:var(--teal);}
+  .mob-btn{display:none;flex-direction:column;gap:4px;width:28px;cursor:pointer;z-index:1002;background:transparent;border:none;padding:0;}
+  .mob-btn span{display:inline-block;height:3px;width:100%;background:var(--teal);transition:.3s;}
+  #drawer{position:fixed;top:70px;left:0;right:0;bottom:0;transform:translateX(100%);background:#fff;z-index:1001;border-top:1px solid var(--border);transition:.35s cubic-bezier(.4,0,.2,1);padding-top:1.75rem;}
+  #drawer ul{list-style:none;padding:0 4vw;margin:0;}
+  #drawer li a{font-size:1.25rem;color:var(--grey-500);display:block;}
+  body.menu-open .mob-btn span:nth-child(1){transform:rotate(45deg);}
+  body.menu-open .mob-btn span:nth-child(2){opacity:0;}
+  body.menu-open .mob-btn span:nth-child(3){transform:rotate(-45deg);}
+  body.menu-open #drawer{transform:translateX(0);}
+  .text-center{text-align:center;}
+  .section-intro{text-align:center;max-width:700px;margin:0 auto 2.5rem auto;}
+  footer{background:var(--grey-500);color:#fff;text-align:center;padding:2rem 4vw;font-size:.875rem;}
+  footer a{color:#fff;text-decoration:underline;}
+  footer p{margin-bottom:.5rem;}
+  .payment-container {max-width:600px;margin:0 auto;background:#fff;padding:2.5rem;border-radius:8px;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+  /* New Styles for Payment Options */
+  .venmo-details { display:flex; flex-direction:column; align-items:center; gap:1rem; }
+  .venmo-details img { width:180px; height:180px; border:1px solid var(--border); }
+  .crypto-notice { border-left:4px solid #f0ad4e; background:#fcf8e3; padding:1rem; margin:2rem 0; border-radius:4px; text-align:left; font-size:0.9rem; }
+  .crypto-notice strong { color:#8a6d3b; }
+  .crypto-grid { display:grid; grid-template-columns:1fr; gap:2rem; margin-top:1rem; }
+  .crypto-wallet { border:1px solid var(--border); padding:1.5rem; border-radius:8px; text-align:center; }
+  .crypto-wallet img { width:150px; height:150px; margin-bottom:1rem; }
+  .wallet-address { display:flex; align-items:center; justify-content:space-between; background:#f5f5f5; border-radius:4px; padding:8px 12px; font-family:monospace, monospace; font-size:0.85rem; word-break:break-all; }
+  .copy-btn { padding:5px 10px; font-size:0.8rem; background:var(--teal); color:#fff; border:none; border-radius:4px; cursor:pointer; margin-left:10px; }
+
+  @media(min-width: 600px){ .crypto-grid { grid-template-columns:1fr 1fr; }}
+  @media(max-width:850px){nav > ul{display:none;}.mob-btn{display:flex;}}
+  </style>
+</head>
+
+<body>
+  <header>
+    <a id="brand" href="index.html">Idaho Art Lab</a>
+    <nav>
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="index.html#makerspace">Makerspace</a></li>
+        <li><a href="index.html#membership">Membership</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#donate" style="font-weight:700;color:var(--teal)">Donate</a></li>
+      </ul>
+      <button class="mob-btn" type="button" aria-label="Toggle mobile menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div id="drawer">
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="index.html#makerspace">Makerspace</a></li>
+        <li><a href="index.html#membership">Membership</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#donate">Donate</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="payment-page" class="bg-grey">
+      <div class="payment-container">
+        <h2>Make a Payment</h2>
+        <p class="section-intro" style="font-size: 0.95rem; margin-bottom: 0;">Use this page to pay for artwork, classes, or supplies. <strong>Please make all donations on <a href="index.html#donate" style="text-decoration: underline; color: var(--teal);">the donations page</a>.</strong></p>
+        
+        <hr>
+
+        <!-- Section 1: PayPal Form -->
+        <h3>Pay with Card / PayPal</h3>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin-top: 1.5rem;">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="3XHN9SFTWB3MG">
+            
+            <p class="text-center" style="margin-bottom: 1.5rem;">Click the button below. You will be prompted to enter the payment amount on the PayPal website.</p>
+            
+            <div class="text-center">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" style="display: none;">
+            </div>
+        </form>
+
+        <hr>
+
+        <!-- Section 2: Venmo Payment -->
+        <h3>Pay with Venmo</h3>
+        <div class="venmo-details">
+            <!-- ACTION REQUIRED: Replace with your actual Venmo QR Code image -->
+            <img src="images/venmo-qr-code-placeholder.webp" alt="Scan to pay with Venmo">
+            <p>Scan the code in your Venmo app, or find us at<br><strong>@Your-Venmo-Username</strong></p>
+        </div>
+
+        <hr>
+
+        <!-- Section 3: Cryptocurrency Payment -->
+        <h3>Pay with Cryptocurrency</h3>
+        <div class="crypto-notice">
+            <strong>IMPORTANT:</strong> Please ensure you are sending the correct cryptocurrency to the corresponding address. Transactions are irreversible. After sending, please email us with the transaction details.
+        </div>
+        <div class="crypto-grid">
+            <div class="crypto-wallet">
+                <h4>Bitcoin (BTC)</h4>
+                <!-- ACTION REQUIRED: Replace with your Bitcoin QR Code -->
+                <img src="images/btc-qr-code-placeholder.webp" alt="Bitcoin wallet QR code">
+                <div class="wallet-address">
+                    <span id="btc-address">YOUR-BITCOIN-ADDRESS-HERE</span>
+                    <button class="copy-btn" data-clipboard-target="#btc-address">Copy</button>
+                </div>
+            </div>
+            <div class="crypto-wallet">
+                <h4>Ethereum &amp; ERC20 Tokens</h4>
+                 <!-- ACTION REQUIRED: Replace with your Ethereum QR Code -->
+                <img src="images/eth-qr-code-placeholder.webp" alt="Ethereum wallet QR code">
+                <div class="wallet-address">
+                    <span id="eth-address">YOUR-ETHEREUM-ADDRESS-HERE</span>
+                    <button class="copy-btn" data-clipboard-target="#eth-address">Copy</button>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">(Use this address for ETH, USDC, USDT, DAI, etc. on the Ethereum Mainnet)</p>
+            </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer id="donate">
+    <p>&copy; 2025 Idaho Art Lab. A 501(c)(3) Non-Profit Organization.</p>
+    <p>2355 S Yellowstone Hwy, St Anthony, ID 83445 | <a href="https://idahoartlab.org/donate.php" target="_blank" rel="noopener noreferrer">Donations are tax-deductible</a>.</p>
+  </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+    // Mobile menu toggle
+    const t=document.querySelector('.mob-btn'),e=document.querySelector('#drawer'),o=document.body,n=()=>{const e=o.classList.toggle('menu-open');t.setAttribute('aria-expanded',e)};t.addEventListener('click',t=>{t.stopPropagation(),n()}),e.addEventListener('click',t=>{'A'===t.target.tagName&&n()}),document.addEventListener('keydown',t=>{'Escape'===t.key&&o.classList.contains('menu-open')&&n()});
+
+    // Clipboard copy functionality
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.dataset.clipboardTarget;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                navigator.clipboard.writeText(targetElement.innerText).then(() => {
+                    const originalText = button.innerText;
+                    button.innerText = 'Copied!';
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
