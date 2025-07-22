@@ -5,112 +5,86 @@
   <title>Idaho Art Lab - Create, Learn, and Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Font Optimization: Preconnect to Google Fonts servers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-  <style>
-  :root{
-    --teal:#007a86;
-    --teal-dark:#005a63;
-    --grey-500:#555;
-    --grey-300:#eaeaea;
-    --border:#d1d1d1;
-    /* Updated hero image from source file */
-    --img1:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2070&auto=format&fit=crop);
-    --img2:url(images/slide2.jpg);
-    --img3:url(images/slide3.jpg);
-    --img4:url(images/slide4.jpg);
-    --img5:url(images/slide5.jpg);
-  }
 
-  /* --- GLOBAL & TYPOGRAPHY --- */
+  <!-- LCP Optimization: Preload the first and most important hero image -->
+  <link rel="preload" as="image" href="/images/hero-background.webp">
+
+  <style>
+  :root{--teal:#007a86;--teal-dark:#005a63;--grey-500:#555;--grey-300:#eaeaea;--border:#d1d1d1;--img1:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide1.webp);--img2:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide2.webp);--img3:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide3.webp);--img4:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide4.webp);--img5:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide5.webp);}
   *,*:before,*:after{box-sizing:border-box;}
-  html{scroll-behavior: smooth;}
+  html{scroll-behavior:smooth;}
   body{margin:0;padding-top:70px;font-family:Lato,sans-serif;color:var(--grey-500);line-height:1.6;}
   body.menu-open{overflow:hidden;}
   a{text-decoration:none;color:inherit;}
+  p{margin-bottom:1rem;}
   section{padding:4rem 8vw;}
   .bg-grey{background:var(--grey-300);}
-  section h2{font-size: 2.5rem;font-weight: 400;text-align: center;margin-top: 0;margin-bottom: 2rem;color: var(--teal);}
-  p { margin-bottom: 1rem; }
-  .btn-primary{background:var(--teal);padding:.85rem 2rem;color:#fff;border:none;border-radius:3px;font-size:1rem;letter-spacing:.02em;cursor:pointer; display: inline-block; margin-top: 1rem; text-align: center; transition: background-color 0.3s;}
+  section h2{font-size:2.5rem;font-weight:400;text-align:center;margin-top:0;margin-bottom:2rem;color:var(--teal);}
+  .btn-primary{background:var(--teal);padding:.85rem 2rem;color:#fff;border:none;border-radius:3px;font-size:1rem;letter-spacing:.02em;cursor:pointer;display:inline-block;margin-top:1rem;text-align:center;transition:background-color .3s;}
   .btn-primary:hover{background:var(--teal-dark);}
-
-  /* --- HEADER & NAVIGATION --- */
-  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);
-         height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;box-shadow:0 2px 4px rgba(0,0,0,.07);}
+  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;box-shadow:0 2px 4px rgba(0,0,0,.07);}
   #brand{font-size:1.5rem;font-weight:700;color:var(--teal);}
   nav ul{list-style:none;margin:0;padding:0;display:inline-flex;gap:1.5rem;}
-  nav ul li a{font-weight:400;color:var(--grey-500);transition: color 0.3s;}
+  nav ul li a{font-weight:400;color:var(--grey-500);transition:color .3s;}
   nav ul li a:hover{color:var(--teal);}
-  @media(max-width:850px){ nav > ul{display:none;} }
-
-  /* --- MOBILE NAVIGATION --- */
   .mob-btn{display:none;flex-direction:column;gap:4px;width:28px;cursor:pointer;z-index:1002;background:transparent;border:none;padding:0;}
-  @media(max-width:850px){ .mob-btn{display:flex;} }
   .mob-btn span{display:inline-block;height:3px;width:100%;background:var(--teal);transition:.3s;}
   .mob-btn span:nth-child(1){transform-origin:left center;}
   .mob-btn span:nth-child(3){transform-origin:left center;}
-  #drawer{position:fixed;top:70px;left:0;right:0;bottom:0;transform:translateX(100%);background:#fff; z-index: 1001;
-          border-top:1px solid var(--border);transition:.35s cubic-bezier(.4,0,.2,1); padding-top: 1.75rem;}
-  #drawer ul{list-style:none;padding:0 4vw; margin: 0;}
+  #drawer{position:fixed;top:70px;left:0;right:0;bottom:0;transform:translateX(100%);background:#fff;z-index:1001;border-top:1px solid var(--border);transition:.35s cubic-bezier(.4,0,.2,1);padding-top:1.75rem;}
+  #drawer ul{list-style:none;padding:0 4vw;margin:0;}
   #drawer li{line-height:2.5;}
-  #drawer li a{font-size:1.25rem;color:var(--grey-500); display: block; }
+  #drawer li a{font-size:1.25rem;color:var(--grey-500);display:block;}
   body.menu-open .mob-btn span:nth-child(1){transform:rotate(45deg);}
   body.menu-open .mob-btn span:nth-child(2){opacity:0;}
   body.menu-open .mob-btn span:nth-child(3){transform:rotate(-45deg);}
   body.menu-open #drawer{transform:translateX(0);}
-
-  /* --- HERO & CAROUSEL --- */
   .hero{position:relative;height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;}
-  .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease-in-out;}
+  .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease-in-out;display:flex;align-items:center;justify-content:center;}
   .slide.active{opacity:1;}
   .slide:nth-child(1){background-image:var(--img1);}
   .slide:nth-child(2){background-image:var(--img2);}
   .slide:nth-child(3){background-image:var(--img3);}
   .slide:nth-child(4){background-image:var(--img4);}
   .slide:nth-child(5){background-image:var(--img5);}
-  /* This pseudo-element is no longer needed since the gradient is part of the image variable now.
-   .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:2;}
-  */
   .hero-content{position:relative;z-index:3;max-width:800px;padding:0 1.5rem;}
   .hero-content h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:300;margin-bottom:.7rem;}
-  .hero-content p{max-width: 600px; margin: 0 auto 1.5rem auto;}
-
-  /* --- OTHER SECTIONS --- */
-  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; align-items: center; }
-  .video-wrapper { position: relative; padding-top: 56.25%; /* 16:9 Aspect Ratio */ height: 0; overflow: hidden; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-  .lab-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;}
-  .lab-item {background: #fff; padding: 1.5rem; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; }
-  .lab-item:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-  .lab-item img {width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 1rem;}
-  .lab-item h3 {margin-top: 0; margin-bottom: 0.5rem; font-weight: 700; color: var(--teal-dark);}
-  .lab-item p { font-size: 0.9rem; }
-
-  /* --- NEW STYLES FOR EVENT LIST --- */
-  .event-list { max-width: 800px; margin: 0 auto 2rem auto; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 1.5rem; }
-  .event-list-item { padding: 15px 0; border-bottom: 1px solid #eee; }
-  .event-list-item:last-child { border-bottom: none; }
-  .event-list-item h3 { font-size: 1.25rem; margin-bottom: 0.25rem; color: var(--teal); }
-  .event-list-item p { font-size: 0.9rem; margin-bottom: 0.2rem; line-height: 1.4; color: #555; }
-  .event-list-item p:last-of-type { margin-bottom: 0; }
-  .event-list-item strong { color: var(--teal-dark); margin-right: 5px; }
-  .hidden { display: none; }
-  .full-calendar-wrapper { margin-top: 3rem; position: relative; padding-top: 75%; background-color: #f7f7f7; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-  .full-calendar-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-  /* Center buttons */
-  .centered-container { text-align: center; }
-
-  #membership {text-align: center;}
-  #membership .btn-primary {transform: scale(1.1); margin-top: 1.5rem;}
-  
-  .contact-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;}
-  @media(max-width: 768px){ .contact-grid{grid-template-columns: 1fr;}}
-  .map-embed {border:0; width: 100%; height: 450px; border-radius: 5px;}
-
+  .hero-content p{max-width:600px;margin:0 auto 1.5rem auto;}
+  .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem;align-items:center;}
+  .video-wrapper{position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,.1);}
+  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;}
+  .lab-item{background:#fff;padding:1.5rem;border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;}
+  .lab-item:hover{transform:translateY(-5px);box-shadow:0 6px 15px rgba(0,0,0,.1);}
+  .lab-item img{width:100%;height:200px;object-fit:cover;border-radius:5px;margin-bottom:1rem;}
+  .lab-item h3{margin-top:0;margin-bottom:.5rem;font-weight:700;color:var(--teal-dark);}
+  .lab-item p{font-size:.9rem;}
+  .event-list{max-width:800px;margin:0 auto 2rem auto;background-color:#fff;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,.05);padding:1.5rem;}
+  .event-list-item{padding:15px 0;border-bottom:1px solid #eee;}
+  .event-list-item:last-child{border-bottom:none;}
+  .event-list-item h3{font-size:1.25rem;margin-bottom:.25rem;color:var(--teal);}
+  .event-list-item p{font-size:.9rem;margin-bottom:.2rem;line-height:1.4;color:#555;}
+  .event-list-item p:last-of-type{margin-bottom:0;}
+  .event-list-item strong{color:var(--teal-dark);margin-right:5px;}
+  .hidden{display:none;}
+  .full-calendar-wrapper{margin-top:3rem;position:relative;padding-top:75%;background-color:#f7f7f7;border-radius:8px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+  .full-calendar-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:solid 1px #777;}
+  .text-center{text-align:center;}
+  .section-intro{text-align:center;max-width:700px;margin:0 auto 2.5rem auto;}
+  .host-needed{color:red;}
+  #membership{text-align:center;}
+  #membership .btn-primary{transform:scale(1.1);margin-top:1.5rem;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;}
+  .map-embed{border:0;width:100%;height:450px;border-radius:5px;}
   footer{background:var(--grey-500);color:#fff;text-align:center;padding:2rem 4vw;font-size:.875rem;}
-  footer a {color: #fff; text-decoration: underline;}
-  footer p { margin-bottom: 0.5rem; }
+  footer a{color:#fff;text-decoration:underline;}
+  footer p{margin-bottom:.5rem;}
+  @media(max-width:850px){nav > ul{display:none;}.mob-btn{display:flex;}}
+  @media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 
@@ -127,9 +101,7 @@
         <li><a href="#donate" style="font-weight:700;color:var(--teal)">Donate</a></li>
       </ul>
       <button class="mob-btn" type="button" aria-label="Toggle mobile menu" aria-controls="drawer" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </nav>
     <div id="drawer">
@@ -146,37 +118,71 @@
 
   <main>
     <div class="hero">
-        <div class="slide active"></div><div class="slide"></div><div class="slide"></div><div class="slide"></div><div class="slide"></div>
-      <div class="hero-content">
-        <h1>Ignite Your Creativity!</h1>
-        <p>The Idaho Art Lab is an open, shared and collaborative space where people with common interests can come together to socialize and work on projects while sharing ideas, equipment, and knowledge.</p>
-        <a href="#events" class="btn-primary">See Upcoming Events</a>
-      </div>
+        <!-- Slide 1: About -->
+        <div class="slide active">
+            <div class="hero-content">
+                <h1>Discover Your Inner Artist</h1>
+                <p>Welcome to a place where creativity has no limits. Find out more about our non-profit mission and the community we serve.</p>
+                <a href="#about" class="btn-primary">Learn More</a>
+            </div>
+        </div>
+        <!-- Slide 2: Events -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1>Always Something Happening</h1>
+                <p>From weekly meetups to hands-on workshops, there's a creative event waiting for you. See what's on the calendar.</p>
+                <a href="#events" class="btn-primary">See Upcoming Events</a>
+            </div>
+        </div>
+        <!-- Slide 3: Membership -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1>Join Us</h1>
+                <p>Unlock 24/7 access, get class discounts, and connect with fellow makers by becoming a member of the Idaho Art Lab family.</p>
+                <a href="#membership" class="btn-primary">Become a Member</a>
+            </div>
+        </div>
+        <!-- Slide 4: Makerspace Tour -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1>Tools for Every Idea</h1>
+                <p>Explore our fully-equipped labs for everything from pottery and painting to 3D printing and podcasting.</p>
+                <a href="#makerspace" class="btn-primary">Makerspace Tour</a>
+            </div>
+        </div>
+        <!-- Slide 5: Donate -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1>Support Local Creativity</h1>
+                <p>Your tax-deductible donation helps us provide the tools, space, and education that empower artists in our community.</p>
+                <a href="#donate" class="btn-primary">Donate</a>
+            </div>
+        </div>
     </div>
 
     <section id="about">
         <h2>Your Creative Hub in Idaho</h2>
         <div class="content-grid">
             <div>
-                 <p>The Idaho Art Lab is a thriving non-profit, volunteer-run makerspace. Our mission is simple: to make creative exploration accessible to everyone in our community.</p>
+                 <p>The Idaho Art Lab non-profit, volunteer-run makerspace. Our mission is simple: to make creative exploration accessible to everyone in our community.</p>
                  <p>From the moment you step through our doors, you'll feel part of a community passionate about making. Whether you're picking up a paintbrush, firing up a 3D printer, or coding your first animation, the Idaho Art Lab is where inspiration meets innovation.</p>
                  <a href="#membership" class="btn-primary">Become a Member!</a>
             </div>
             <div class="video-wrapper">
-                 <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Discover the Idaho Art Lab" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                 <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Discover the Idaho Art Lab" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
     <section id="events" class="bg-grey">
         <h2>Upcoming Events</h2>
-        <p style="text-align:center; max-width: 700px; margin: 0 auto 2.5rem auto;">There's always something new to learn and create at the Idaho Art Lab!</p>
+        <p class="section-intro">There's always something new to learn and create at the Idaho Art Lab!</p>
 
         <div class="event-list">
             <div class="event-list-item"><h3>Open to Public / Drop-in</h3><p><strong>When:</strong> Monday - Saturday, 3 pm - 7 pm</p><p>Our doors are open for general access to the makerspace. Drop in and work on your projects!</p></div>
-            <div class="event-list-item"><h3>Creators and Coffee</h3><p><strong>When:</strong> Every Sunday, 9am - Noon</p><p><strong>Type:</strong> Social</p><p><strong style="color:red;">HOST NEEDED!</strong></p></div>
+            <div class="event-list-item"><h3>Creators and Coffee</h3><p><strong>When:</strong> Every Sunday, 9am - Noon</p><p><strong>Type:</strong> Social</p><p><strong class="host-needed">HOST NEEDED!</strong></p></div>
             <div class="event-list-item"><h3>Rotating Club Meetups</h3><p><strong>When:</strong> Every Monday, 7pm</p><p><strong>Type:</strong> Art Club</p><p>Join rotating club meetups: Fiber Art, Casting, Gem, Photography. Check calendar for specific week's focus.</p></div>
-            <div class="event-list-item"><h3>Language Exchange</h3><p><strong>When:</strong> Every Tuesday, 7pm</p><p><strong>Type:</strong> Social/Education</p><p><strong style="color:red;">HOST NEEDED!</strong></p></div>
+            <div class="event-list-item"><h3>Language Exchange</h3><p><strong>When:</strong> Every Tuesday, 7pm</p><p><strong>Type:</strong> Social/Education</p><p><strong class="host-needed">HOST NEEDED!</strong></p></div>
             <div class="event-list-item"><h3>Make and Take</h3><p><strong>When:</strong> Every Wednesday, 7pm</p><p><strong>Type:</strong> Art</p><p><strong>Cost:</strong> Varies, $5 - $20</p><p>Hands-on creative projects like ceramics painting, wire wrapping, screen printing, and more!</p></div>
             <div class="event-list-item"><h3>Exploring FOSS (Software Freedom)</h3><p><strong>Host:</strong> Pending</p><p><strong>When:</strong> Every Thursday, 7pm - 8pm</p><p><strong>Where:</strong> Art Lab, Main Stage</p><p><strong>Category:</strong> Tech</p><p><strong>Cost:</strong> Free (no registration required)</p></div>
             <div class="event-list-item"><h3>Linux User Group Meetup</h3><p><strong>Host:</strong> None/informal (Ryndon)</p><p><strong>When:</strong> Every Thursday, 8pm - 9pm</p><p><strong>Category:</strong> Tech</p><p><strong>Cost:</strong> Free</p></div>
@@ -184,32 +190,32 @@
             <div class="event-list-item"><h3>Makerspace Improvements!</h3><p><strong>When:</strong> Every Saturday, 12noon - 7pm</p><p><strong>Type:</strong> Social/Volunteer</p><p>Help us improve the space! A great way to meet fellow makers and contribute to the community.</p></div>
         </div>
 
-        <div class="centered-container">
+        <div class="text-center">
             <button id="showFullCalendarBtn" class="btn-primary">Show Full Calendar</button>
         </div>
 
         <div id="fullCalendarWrapper" class="full-calendar-wrapper hidden">
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&bgcolor=%23ffffff&mode=MONTH&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%2309d67a" title="Idaho Art Lab Full Events Calendar" style="border:solid 1px #777"></iframe>
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&bgcolor=%23ffffff&mode=MONTH&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%2309d67a" title="Idaho Art Lab Full Events Calendar" loading="lazy"></iframe>
         </div>
     </section>
 
     <section id="makerspace">
         <h2>Explore The Studios & Labs</h2>
         <div class="lab-grid">
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1576426863848-c21f68c6aa98?q=80&w=2070" alt="Shelves full of unfinished white ceramic bisque ware"><h3>Ceramics Painting Studio</h3><p>Unleash your creativity on hundreds of ceramic bisque ware pieces. Access our extensive 1,500+ casting mold inventory to find the perfect piece to paint or glaze.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1554939762-b9e3a33993f8?q=80&w=2070" alt="A pottery studio with numerous electric wheels"><h3>Pottery Wheel & Kiln Studio</h3><p>Work on one of our 11 electric pottery wheels, adult kick wheel, slab roller, or extruder. We offer firing services up to Cone 10 in electric or gas kilns, plus a raku kiln. Clay is available for purchase.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1563859652-324086603554?q=80&w=1964" alt="A clay sculpture of a head being worked on"><h3>Sculpture Lab</h3><p>Utilize our ergonomic electric sculptor's tables (3) or sculpture stands (6) to elevate your projects. We provide 5 lb. bags of clay for sale and offer firing services by-the-inch or full kiln rental.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071" alt="An artist's painting studio with an easel and paints"><h3>Drawing & Painting Studio</h3><p>An inspiring space, free and open to the public. Access our 4 ft. light table, straight-edge boards, various easels, overhead projector, paper cutters, and large project tables. Bring your ideas to life!</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1617953141933-aab2a1599a8e?q=80&w=2070&auto=format&fit=crop" alt="A workstation with a tablet displaying digital animation software"><h3>Animation Lab</h3><p>Explore traditional animation with a large light table, copy stand, and computer digitizing station. For advanced projects, rent a complete Digital Cartoon Animation Station and bring your characters to life.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1599587494392-28c397e59b1e?q=80&w=2070" alt="Colorful polished stones and gems"><h3>Lapidary Studio</h3><p>Transform raw stones into polished works of art. Our lapidary lab features equipment for stone slabbing, trimming, grinding, and polishing, perfect for creating beautiful cabochons and finished gems.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1610422952873-4554c86515f4?q=80&w=1974&auto=format&fit=crop" alt="A 3D printer in action creating a white object"><h3>3D Print Lab</h3><p>Bring your digital designs to life! Our 3D print lab offers several FDM printers for rapid prototyping, artistic creations, and functional parts. Learn to design for 3D printing and turn your ideas into physical objects.</p></div>
-            <div class="lab-item"><img src="https://www.idahoartlab.org/images/classes-workshops/lost-wax-casting-process.jpg" alt="Jewelry making tools on a workbench"><h3>Lost Wax Metal Casting</h3><p>Craft intricate jewelry pieces or small sculptures in metal using our specialized equipment. We offer 6 jewelers benches and utilize a high-quality centrifuge casting method for superior results.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1623861875704-508549e04918?q=80&w=1974&auto=format&fit=crop" alt="A person using a squeegee to screen print a design"><h3>Screen Printing Studio</h3><p>Produce professional fine art serigraphs or custom apparel using our photo emulsion tables, a 4 ft. vacuum table, over 90 screens, and a 4-color T-Shirt press. Your designs, our tools!</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1633596956241-995a25ea7437?q=80&w=2070&auto=format&fit=crop" alt="Linoleum block carving tools and ink"><h3>Block & Monoprinting</h3><p>Explore printmaking by carving into linoleum blocks, or experiment with unique monoprinting techniques using our brayers, glass surfaces, book press, and Speedball gelatin plates.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" alt="A computer with creative software on the screen and a green screen behind it"><h3>Digital Art & Media Lab</h3><p>Dive into digital creation with our powerful workstations. Learn software like Photoshop, Adobe Creative Suite, and 3D Rendering. We also offer a 10 ft. green screen for video production and a sound booth for professional voice-overs.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1519643381401-22c77e60520e?q=80&w=2073" alt="Photographs hanging to dry in a darkroom with a red safelight glow"><h3>Photography Darkroom</h3><p>Step back in time and develop your own black and white photography. Our large format darkroom supports developing negatives up to 4" x 5" and printing up to 16" x 20".</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1618035812975-690e0b37d43a?q=80&w=2062&auto=format&fit=crop" alt="Abstract sheets of colored plastic"><h3>Vacuum Forming & Vinyl Baking</h3><p>Create custom shapes and durable finishes. Form plastic, silicone, or vinyl sheets up to 4x4 feet with our vacuum former. You can also bake vinyl onto metal for long-lasting, vibrant custom pieces.</p></div>
-            <div class="lab-item"><img src="https://images.unsplash.com/photo-1595183241414-d9263a201620?q=80&w=1964&auto=format&fit=crop" alt="A professional microphone and headphones in a recording booth"><h3>Podcasting and Video Studio</h3><p>Record, edit, and produce high-quality audio and video content. Our studio is equipped for podcasting, interviews, green-screen video production, and more. Share your stories with the world!</p></div>
+            <div class="lab-item"><img src="/images/ceramics-painting.webp" alt="Shelves full of unfinished white ceramic bisque ware" loading="lazy" decoding="async" width="400" height="200"><h3>Ceramics Painting Studio</h3><p>Unleash your creativity on hundreds of ceramic bisque ware pieces. Access our extensive 1,500+ casting mold inventory.</p></div>
+            <div class="lab-item"><img src="/images/pottery-wheel.webp" alt="A pottery studio with numerous electric wheels" loading="lazy" decoding="async" width="400" height="200"><h3>Pottery Wheel & Kiln Studio</h3><p>Work on one of our 11 electric pottery wheels, kick wheel, slab roller, or extruder. We offer firing services up to Cone 10.</p></div>
+            <div class="lab-item"><img src="/images/sculpture-lab.webp" alt="A clay sculpture of a head being worked on" loading="lazy" decoding="async" width="400" height="200"><h3>Sculpture Lab</h3><p>Utilize our ergonomic electric sculptor's tables or sculpture stands to elevate your projects. Clay for sale and firing services available.</p></div>
+            <div class="lab-item"><img src="/images/painting-studio.webp" alt="An artist's painting studio with an easel and paints" loading="lazy" decoding="async" width="400" height="200"><h3>Drawing & Painting Studio</h3><p>An inspiring space, free and open to the public. Access our light table, easels, projector, paper cutters, and large project tables.</p></div>
+            <div class="lab-item"><img src="/images/animation-lab.webp" alt="A workstation with a tablet displaying digital animation software" loading="lazy" decoding="async" width="400" height="200"><h3>Animation Lab</h3><p>Explore traditional animation with a light table and copy stand, or rent a complete Digital Cartoon Animation Station.</p></div>
+            <div class="lab-item"><img src="/images/lapidary-studio.webp" alt="Colorful polished stones and gems" loading="lazy" decoding="async" width="400" height="200"><h3>Lapidary Studio</h3><p>Transform raw stones into polished works of art with equipment for stone slabbing, trimming, grinding, and polishing.</p></div>
+            <div class="lab-item"><img src="/images/3d-print-lab.webp" alt="A 3D printer in action creating a white object" loading="lazy" decoding="async" width="400" height="200"><h3>3D Print Lab</h3><p>Bring your digital designs to life with our FDM printers for rapid prototyping, artistic creations, and functional parts.</p></div>
+            <div class="lab-item"><img src="/images/metal-casting.webp" alt="Jewelry making tools on a workbench" loading="lazy" decoding="async" width="400" height="200"><h3>Lost Wax Metal Casting</h3><p>Craft intricate jewelry or small sculptures in metal using our 6 jewelers benches and high-quality centrifuge casting method.</p></div>
+            <div class="lab-item"><img src="/images/screen-printing.webp" alt="A person using a squeegee to screen print a design" loading="lazy" decoding="async" width="400" height="200"><h3>Screen Printing Studio</h3><p>Produce fine art serigraphs or custom apparel using our photo emulsion tables, vacuum table, and a 4-color T-Shirt press.</p></div>
+            <div class="lab-item"><img src="/images/block-printing.webp" alt="Linoleum block carving tools and ink" loading="lazy" decoding="async" width="400" height="200"><h3>Block & Monoprinting</h3><p>Explore printmaking by carving linoleum blocks, or experiment with monoprinting using our brayers and gelatin plates.</p></div>
+            <div class="lab-item"><img src="/images/digital-media-lab.webp" alt="A computer with creative software and a green screen behind it" loading="lazy" decoding="async" width="400" height="200"><h3>Digital Art & Media Lab</h3><p>Dive into digital creation with powerful workstations for Photoshop, 3D Rendering, a green screen, and a sound booth.</p></div>
+            <div class="lab-item"><img src="/images/photography-darkroom.webp" alt="Photographs hanging to dry in a darkroom with a red safelight" loading="lazy" decoding="async" width="400" height="200"><h3>Photography Darkroom</h3><p>Develop your own black and white photography in our large format darkroom. Supports developing negatives up to 4" x 5".</p></div>
+            <div class="lab-item"><img src="/images/vacuum-forming.webp" alt="Abstract sheets of colored plastic" loading="lazy" decoding="async" width="400" height="200"><h3>Vacuum Forming & Vinyl Baking</h3><p>Form plastic, silicone, or vinyl sheets up to 4x4 feet with our vacuum former, or bake vinyl onto metal for durable finishes.</p></div>
+            <div class="lab-item"><img src="/images/podcasting-studio.webp" alt="A professional microphone and headphones in a recording booth" loading="lazy" decoding="async" width="400" height="200"><h3>Podcasting and Video Studio</h3><p>Record, edit, and produce high-quality audio and video content for podcasting, interviews, and green-screen production.</p></div>
         </div>
     </section>
 
@@ -221,7 +227,7 @@
 
     <section id="contact">
         <h2>Visit The Makerspace</h2>
-        <p style="text-align:center; max-width: 700px; margin: 0 auto 2.5rem auto;">Come experience the Idaho Art Lab firsthand! We're conveniently located in St. Anthony, Idaho. Drop by during our open hours or by appointment.</p>
+        <p class="section-intro">Come experience the Idaho Art Lab firsthand! We're conveniently located in St. Anthony, Idaho. Drop by during our open hours or by appointment.</p>
         <div class="contact-grid">
             <div>
                 <p><strong>ADDRESS:</strong><br>2355 S Yellowstone Hwy,<br>St. Anthony, ID, 83445</p>
@@ -241,45 +247,7 @@
   </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // --- RESPONSIVE NAVIGATION MENU ---
-    const mobileMenuButton = document.querySelector('.mob-btn');
-    const navDrawer = document.querySelector('#drawer');
-    const body = document.body;
-
-    const toggleMenu = () => {
-        const isMenuOpen = body.classList.toggle('menu-open');
-        mobileMenuButton.setAttribute('aria-expanded', isMenuOpen);
-    };
-    mobileMenuButton.addEventListener('click', e => { e.stopPropagation(); toggleMenu(); });
-    navDrawer.addEventListener('click', e => { if (e.target.tagName === 'A') { toggleMenu(); } });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && body.classList.contains('menu-open')) { toggleMenu(); } });
-
-    // --- HERO IMAGE CAROUSEL ---
-    const slides = document.querySelectorAll('.hero .slide');
-    if (slides.length > 1) {
-        let currentSlide = 0;
-        const slideInterval = 6000; 
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        setInterval(nextSlide, slideInterval);
-    }
-    
-    // --- SCRIPT FOR EVENTS SECTION FULL CALENDAR ---
-    const showFullCalendarBtn = document.getElementById('showFullCalendarBtn');
-    const fullCalendarWrapper = document.getElementById('fullCalendarWrapper');
-
-    if (showFullCalendarBtn && fullCalendarWrapper) {
-        showFullCalendarBtn.addEventListener('click', () => {
-            fullCalendarWrapper.classList.remove('hidden');
-            showFullCalendarBtn.style.display = 'none'; // Hide the button after click
-            fullCalendarWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-    }
-});
+document.addEventListener('DOMContentLoaded',()=>{const e=document.querySelector('.mob-btn'),t=document.querySelector('#drawer'),n=document.body,o=()=>{const t=n.classList.toggle('menu-open');e.setAttribute('aria-expanded',t)};e.addEventListener('click',e=>{e.stopPropagation(),o()}),t.addEventListener('click',e=>{'A'===e.target.tagName&&o()}),document.addEventListener('keydown',e=>{'Escape'===e.key&&n.classList.contains('menu-open')&&o()});const d=document.querySelectorAll('.hero .slide');if(d.length>1){let e=0;const t=6e3;setInterval(()=>{d[e].classList.remove('active'),e=(e+1)%d.length,d[e].classList.add('active')},t)}const l=document.getElementById('showFullCalendarBtn'),a=document.getElementById('fullCalendarWrapper');l&&a&&l.addEventListener('click',()=>{a.classList.remove('hidden'),l.style.display='none',a.scrollIntoView({behavior:'smooth',block:'center'})})});
 </script>
 
 </body>
