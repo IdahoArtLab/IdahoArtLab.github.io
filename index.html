@@ -13,78 +13,497 @@
   <!-- LCP Optimization: Preload the first and most important hero image -->
   <link rel="preload" as="image" href="/images/hero-background.webp">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yOPNf/Z6hYc5v5n2Q1x5Ntk1l7Bsw6Jg8Nf9mVlXhQz/lWn9S0r5f9+6Z" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
-  :root{--teal:#007a86;--teal-dark:#005a63;--grey-500:#555;--grey-300:#eaeaea;--border:#d1d1d1;--img1:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide1.webp);--img2:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide2.webp);--img3:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide3.webp);--img4:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide4.webp);--img5:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide5.webp);}
-  *,*:before,*:after{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;padding-top:70px;font-family:Lato,sans-serif;color:var(--grey-500);line-height:1.6;}
-  body.menu-open{overflow:hidden;}
-  a{text-decoration:none;color:inherit;}
-  p{margin-bottom:1rem;}
-  section{padding:4rem 8vw;}
-  .bg-grey{background:var(--grey-300);}
-  section h2{font-size:2.5rem;font-weight:400;text-align:center;margin-top:0;margin-bottom:2rem;color:var(--teal);}
-  .btn-primary{background:var(--teal);padding:.85rem 2rem;color:#fff;border:none;border-radius:3px;font-size:1rem;letter-spacing:.02em;cursor:pointer;display:inline-block;margin-top:1rem;text-align:center;transition:background-color .3s;}
-  .btn-primary:hover{background:var(--teal-dark);}
-  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;box-shadow:0 2px 4px rgba(0,0,0,.07);}
-  #brand{font-size:1.5rem;font-weight:700;color:var(--teal);}
-  nav ul{list-style:none;margin:0;padding:0;display:inline-flex;gap:1.5rem;}
-  nav ul li a{font-weight:400;color:var(--grey-500);transition:color .3s;}
-  nav ul li a:hover{color:var(--teal);}
-  .mob-btn{display:none;flex-direction:column;gap:4px;width:28px;cursor:pointer;z-index:1002;background:transparent;border:none;padding:0;}
-  .mob-btn span{display:inline-block;height:3px;width:100%;background:var(--teal);transition:.3s;}
-  .mob-btn span:nth-child(1){transform-origin:left center;}
-  .mob-btn span:nth-child(3){transform-origin:left center;}
-  #drawer{position:fixed;top:70px;left:0;right:0;bottom:0;transform:translateX(100%);background:#fff;z-index:1001;border-top:1px solid var(--border);transition:.35s cubic-bezier(.4,0,.2,1);padding-top:1.75rem;}
-  #drawer ul{list-style:none;padding:0 4vw;margin:0;}
-  #drawer li{line-height:2.5;}
-  #drawer li a{font-size:1.25rem;color:var(--grey-500);display:block;}
-  body.menu-open .mob-btn span:nth-child(1){transform:rotate(45deg);}
-  body.menu-open .mob-btn span:nth-child(2){opacity:0;}
-  body.menu-open .mob-btn span:nth-child(3){transform:rotate(-45deg);}
-  body.menu-open #drawer{transform:translateX(0);}
-  .hero{position:relative;height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;}
-  .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease-in-out;display:flex;align-items:center;justify-content:center;}
-  .slide.active{opacity:1;}
-  .slide:nth-child(1){background-image:var(--img1);}
-  .slide:nth-child(2){background-image:var(--img2);}
-  .slide:nth-child(3){background-image:var(--img3);}
-  .slide:nth-child(4){background-image:var(--img4);}
-  .slide:nth-child(5){background-image:var(--img5);}
-  .hero-content{position:relative;z-index:3;max-width:800px;padding:0 1.5rem;}
-  .hero-content h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:300;margin-bottom:.7rem;}
-  .hero-content p{max-width:600px;margin:0 auto 1.5rem auto;}
-  .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem;align-items:center;}
-  .video-wrapper{position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,.1);}
-  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
-  .lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;}
-  .lab-item{background:#fff;padding:1.5rem;border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;}
-  .lab-item:hover{transform:translateY(-5px);box-shadow:0 6px 15px rgba(0,0,0,.1);}
-  .lab-item img{width:100%;height:200px;object-fit:cover;border-radius:5px;margin-bottom:1rem;}
-  .lab-item h3{margin-top:0;margin-bottom:.5rem;font-weight:700;color:var(--teal-dark);}
-  .lab-item p{font-size:.9rem;}
-  .event-list{max-width:800px;margin:0 auto 2rem auto;background-color:#fff;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,.05);padding:1.5rem;}
-  .event-list-item{padding:15px 0;border-bottom:1px solid #eee;}
-  .event-list-item:last-child{border-bottom:none;}
-  .event-list-item h3{font-size:1.25rem;margin-bottom:.25rem;color:var(--teal);}
-  .event-list-item p{font-size:.9rem;margin-bottom:.2rem;line-height:1.4;color:#555;}
-  .event-list-item p:last-of-type{margin-bottom:0;}
-  .event-list-item strong{color:var(--teal-dark);margin-right:5px;}
-  .hidden{display:none;}
-  .full-calendar-wrapper{margin-top:3rem;position:relative;padding-top:75%;background-color:#f7f7f7;border-radius:8px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.08);}
-  .full-calendar-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:solid 1px #777;}
-  .text-center{text-align:center;}
-  .section-intro{text-align:center;max-width:700px;margin:0 auto 2.5rem auto;}
-  .host-needed{color:red;}
-  #membership{text-align:center;}
-  #membership .btn-primary{transform:scale(1.1);margin-top:1.5rem;}
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;}
-  .map-embed{border:0;width:100%;height:450px;border-radius:5px;}
-  footer{background:var(--grey-500);color:#fff;text-align:center;padding:2rem 4vw;font-size:.875rem;}
-  footer a{color:#fff;text-decoration:underline;}
-  footer p{margin-bottom:.5rem;}
-  @media(max-width:850px){nav > ul{display:none;}.mob-btn{display:flex;}}
-  @media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+    :root {
+      --teal: #007a86;
+      --teal-dark: #005a63;
+      --grey-500: #555;
+      --grey-300: #eaeaea;
+      --border: #d1d1d1;
+      --img1: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide1.webp);
+      --img2: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide2.webp);
+      --img3: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide3.webp);
+      --img4: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide4.webp);
+      --img5: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/slide5.webp);
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 70px;
+      font-family: Lato, sans-serif;
+      color: var(--grey-500);
+      line-height: 1.6;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    section {
+      padding: 4rem 8vw;
+    }
+
+    .bg-grey {
+      background: var(--grey-300);
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      font-weight: 400;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      color: var(--teal);
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      padding: .85rem 2rem;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 1rem;
+      letter-spacing: .02em;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 1rem;
+      text-align: center;
+      transition: background-color .3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-dark);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .07);
+    }
+
+    #brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a {
+      font-weight: 400;
+      color: var(--grey-500);
+      transition: color .3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--teal);
+    }
+
+    .mob-btn {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      width: 28px;
+      cursor: pointer;
+      z-index: 1002;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .mob-btn span {
+      display: inline-block;
+      height: 3px;
+      width: 100%;
+      background: var(--teal);
+      transition: .3s;
+    }
+
+    .mob-btn span:nth-child(1) {
+      transform-origin: left center;
+    }
+
+    .mob-btn span:nth-child(3) {
+      transform-origin: left center;
+    }
+
+    #drawer {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: translateX(100%);
+      background: #fff;
+      z-index: 1001;
+      border-top: 1px solid var(--border);
+      transition: .35s cubic-bezier(.4, 0, .2, 1);
+      padding-top: 1.75rem;
+    }
+
+    #drawer ul {
+      list-style: none;
+      padding: 0 4vw;
+      margin: 0;
+    }
+
+    #drawer li {
+      line-height: 2.5;
+    }
+
+    #drawer li a {
+      font-size: 1.25rem;
+      color: var(--grey-500);
+      display: block;
+    }
+
+    body.menu-open .mob-btn span:nth-child(1) {
+      transform: rotate(45deg);
+    }
+
+    body.menu-open .mob-btn span:nth-child(2) {
+      opacity: 0;
+    }
+
+    body.menu-open .mob-btn span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    body.menu-open #drawer {
+      transform: translateX(0);
+    }
+
+    .hero {
+      position: relative;
+      height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden; /* Crucial for absolute positioned slides */
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide:nth-child(1) {
+      background-image: var(--img1);
+    }
+
+    .slide:nth-child(2) {
+      background-image: var(--img2);
+    }
+
+    .slide:nth-child(3) {
+      background-image: var(--img3);
+    }
+
+    .slide:nth-child(4) {
+      background-image: var(--img4);
+    }
+
+    .slide:nth-child(5) {
+      background-image: var(--img5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      padding: 0 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: .7rem;
+    }
+
+    .hero-content p {
+      max-width: 600px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    /* --- Carousel Arrows --- */
+    .carousel-arrows {
+      position: absolute;
+      top: 50%; /* Vertically center */
+      transform: translateY(-50%);
+      z-index: 10; /* Ensure arrows are above slides */
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px; /* Add some space from the edges */
+      box-sizing: border-box; /* Include padding in width */
+    }
+
+    .carousel-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      color: #fff; /* White arrow color */
+      border-radius: 50%; /* Make it circular */
+      font-size: 24px; /* Size of the arrow symbol */
+      cursor: pointer;
+      transition: background-color .3s ease;
+      user-select: none; /* Prevent text selection of the arrow */
+    }
+
+    .carousel-arrow:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* --- End Carousel Arrows --- */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-top: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .lab-item {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .07);
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .lab-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, .1);
+    }
+
+    .lab-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .lab-item h3 {
+      margin-top: 0;
+      margin-bottom: .5rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+    }
+
+    .lab-item p {
+      font-size: .9rem;
+    }
+
+    .event-list {
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+  padding: 1rem; /* Reduced padding */
+}
+
+.event-list-item {
+  padding: 10px 0; /* Reduced vertical padding */
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px; /* Reduced bottom margin */
+}
+
+.event-list-item:last-child {
+  border-bottom: none;
+}
+
+.event-list-item h3 {
+  font-size: 1.25rem;
+  margin-bottom: .25rem;
+  color: var(--teal);
+}
+
+.event-list-item p {
+  font-size: .9rem;
+  margin-bottom: .15rem; /* Reduced bottom margin */
+  line-height: 1.4;
+  color: #555;
+}
+
+.event-list-item p:last-of-type {
+  margin-bottom: 0;
+}
+
+.event-list-item strong {
+  color: var(--teal-dark);
+  margin-right: 5px;
+}
+    .hidden {
+      display: none;
+    }
+
+    .full-calendar-wrapper {
+      margin-top: 3rem;
+      position: relative;
+      padding-top: 75%;
+      background-color: #f7f7f7;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+    }
+
+    .full-calendar-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: solid 1px #777;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .section-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2.5rem auto;
+    }
+
+    .host-needed {
+      color: red;
+    }
+
+    #membership {
+      text-align: center;
+    }
+
+    #membership .btn-primary {
+      transform: scale(1.1);
+      margin-top: 1.5rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .map-embed {
+      border: 0;
+      width: 100%;
+      height: 450px;
+      border-radius: 5px;
+    }
+
+    footer {
+      background: var(--grey-500);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 4vw;
+      font-size: .875rem;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    footer p {
+      margin-bottom: .5rem;
+    }
+
+    @media (max-width: 850px) {
+      nav>ul {
+        display: none;
+      }
+
+      .mob-btn {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -118,146 +537,244 @@
 
   <main>
     <div class="hero">
-        <!-- Slide 1: About -->
-        <div class="slide active">
-            <div class="hero-content">
-                <h1>Discover Your Inner Artist</h1>
-                <p>Welcome to a place where creativity has no limits.</p>
-                <a href="#about" class="btn-primary">Learn More</a>
-            </div>
+      <!-- Slide 1: About -->
+      <div class="slide active">
+        <div class="hero-content">
+          <h1>Discover Your Inner Artist</h1>
+          <p>Welcome to a place where creativity has no limits.</p>
+          <a href="#about" class="btn-primary">Learn More</a>
         </div>
-        <!-- Slide 2: Makerspace Tour -->
-        <div class="slide">
-            <div class="hero-content">
-                <h1>Tools for Every Idea</h1>
-                <p>Explore fully-equipped labs for everything from pottery and painting to 3D printing and podcasting.</p>
-                <a href="#makerspace" class="btn-primary">Makerspace Tour</a>
-            </div>
+      </div>
+      <!-- Slide 2: Makerspace Tour -->
+      <div class="slide">
+        <div class="hero-content">
+          <h1>Tools for Every Idea</h1>
+          <p>Explore fully-equipped labs for everything from pottery and painting to 3D printing and podcasting.</p>
+          <a href="#makerspace" class="btn-primary">Makerspace Tour</a>
         </div>
-        <!-- Slide 3: Membership -->
-        <div class="slide">
-            <div class="hero-content">
-                <h1>Join Us</h1>
-                <p>Unlock 24/7 access and connect with fellow makers by becoming a member of the Idaho Art Lab family.</p>
-                <a href="#membership" class="btn-primary">Become a Member</a>
-            </div>
+      </div>
+      <!-- Slide 3: Membership -->
+      <div class="slide">
+        <div class="hero-content">
+          <h1>Join Us</h1>
+          <p>Unlock access and connect with fellow makers by becoming a member of the Idaho Art Lab family.</p>
+          <a href="#membership" class="btn-primary">Become a Member</a>
         </div>
-        <!-- Slide 4: Events -->
-        <div class="slide">
-            <div class="hero-content">
-                <h1>Always Something Happening</h1>
-                <p>From weekly meetups to hands-on workshops, there's a creative event waiting for you.</p>
-                <a href="#events" class="btn-primary">See Upcoming Events</a>
-            </div>
+      </div>
+      <!-- Slide 4: Events -->
+      <div class="slide">
+        <div class="hero-content">
+          <h1>Always Something Happening</h1>
+          <p>From weekly meetups to hands-on workshops, there's a creative event waiting for you.</p>
+          <a href="#events" class="btn-primary">See Upcoming Events</a>
         </div>
-        <!-- Slide 5: Donate -->
-        <div class="slide">
-            <div class="hero-content">
-                <h1>Support Local Creativity</h1>
-                <p>Your tax-deductible donation helps us provide the tools, space, and education that empower artists in our community.</p>
-                <a href="#donate" class="btn-primary">Donate</a>
-            </div>
+      </div>
+      <!-- Slide 5: Donate -->
+      <div class="slide">
+        <div class="hero-content">
+          <h1>Support Local Creativity</h1>
+          <p>Your tax-deductible donation helps us provide the tools, space, and education that empower artists in our community.</p>
+          <a href="#donate" class="btn-primary">Donate</a>
         </div>
+      </div>
+
+      <!-- Carousel Arrows -->
+      <div class="carousel-arrows">
+        <div class="carousel-arrow" id="prevBtn">&#8249;</div> <!-- Left arrow -->
+        <div class="carousel-arrow" id="nextBtn">&#8250;</div> <!-- Right arrow -->
+      </div>
+      <!-- End Carousel Arrows -->
+
     </div>
 
     <section id="about">
-    <h2>Your Creative Hub</h2>
-    <div class="content-grid">
+      <h2>Your Creative Hub</h2>
+      <div class="content-grid">
         <div>
-             <p>The Idaho Art Lab is a non-profit, volunteer-run makerspace. Our mission is simple: to make creative exploration accessible to everyone in our community.</p>
-             <p>From the moment you step through the doors, you'll feel part of a community passionate about making. Whether you're picking up a paintbrush, prototyping on a 3D printer, or making your first animation, the Idaho Art Lab is where inspiration meets innovation.</p>
-             <div class="text-center">
-                <a href="#membership" class="btn-primary">Become a Member!</a>
-             </div>
+          <p>The Idaho Art Lab is a non-profit, volunteer-run makerspace. Our mission is simple: to make creative exploration accessible to everyone in our community.</p>
+          <p>From the moment you step through the doors, you'll feel part of a community passionate about making. Whether you're picking up a paintbrush, prototyping on a 3D printer, or making your first animation, the Idaho Art Lab is where inspiration meets innovation.</p>
+          <div class="text-center">
+            <a href="#membership" class="btn-primary">Become a Member!</a>
+          </div>
         </div>
         <div class="video-wrapper">
-             <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Discover the Idaho Art Lab" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/su9l0-lGmJ0" title="Discover the Idaho Art Lab" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
     <section id="events" class="bg-grey">
-        <h2>Upcoming Events</h2>
-        <p class="section-intro">There's always something new to learn and create at the Idaho Art Lab!</p>
+      <h2>Upcoming Events</h2>
+      <p class="section-intro">There's always something new to learn and create at the Idaho Art Lab!</p>
 
-        <div class="event-list">
-            <div class="event-list-item"><h3>Open to Public / Drop-in</h3><p><strong>When:</strong> Monday - Saturday, 3 pm - 7 pm</p><p>Our doors are open for general access to the makerspace. Drop in and work on your projects!</p></div>
-            <div class="event-list-item"><h3>Creators and Coffee</h3><p><strong>When:</strong> Every Sunday, 9am - Noon</p><p><strong>Type:</strong> Social</p><p><strong class="host-needed">HOST NEEDED!</strong></p></div>
-            <div class="event-list-item"><h3>Rotating Club Meetups</h3><p><strong>When:</strong> Every Monday, 7pm</p><p><strong>Type:</strong> Art Club</p><p>Join rotating club meetups: Fiber Art, Casting, Gem, Photography. Check calendar for specific week's focus.</p></div>
-            <div class="event-list-item"><h3>Language Exchange</h3><p><strong>When:</strong> Every Tuesday, 7pm</p><p><strong>Type:</strong> Social/Education</p><p><strong class="host-needed">HOST NEEDED!</strong></p></div>
-            <div class="event-list-item"><h3>Make and Take</h3><p><strong>When:</strong> Every Wednesday, 7pm</p><p><strong>Type:</strong> Art</p><p><strong>Cost:</strong> Varies, $5 - $20</p><p>Hands-on creative projects like ceramics painting, wire wrapping, screen printing, and more!</p></div>
-            <div class="event-list-item"><h3>Exploring FOSS (Software Freedom)</h3><p><strong>Host:</strong> Pending</p><p><strong>When:</strong> Every Thursday, 7pm - 8pm</p><p><strong>Where:</strong> Art Lab, Main Stage</p><p><strong>Category:</strong> Tech</p><p><strong>Cost:</strong> Free (no registration required)</p></div>
-            <div class="event-list-item"><h3>Linux User Group Meetup</h3><p><strong>Host:</strong> None/informal (Ryndon)</p><p><strong>When:</strong> Every Thursday, 8pm - 9pm</p><p><strong>Category:</strong> Tech</p><p><strong>Cost:</strong> Free</p></div>
-            <div class="event-list-item"><h3>Musicians Meetup</h3><p><strong>When:</strong> Every Friday, 6pm - 7pm</p><p><strong>Type:</strong> Social / Performance</p><p>Stage performances on rotating weeks. Fridays 7pm: live music, dancing, karaoke, open mic sessions!</p></div>
-            <div class="event-list-item"><h3>Makerspace Improvements!</h3><p><strong>When:</strong> Every Saturday, 12noon - 7pm</p><p><strong>Type:</strong> Social/Volunteer</p><p>Help us improve the space! A great way to meet fellow makers and contribute to the community.</p></div>
+      <div class="event-list">
+        <div class="event-list-item">
+          <h3>Open to Public / Drop-in</h3>
+          <p><strong>When:</strong> Monday - Friday, 12 noon - 7pm</p>
+          <p>Our doors are open for general access to the makerspace. Drop in and work on your projects!</p>
         </div>
+        <div class="event-list-item">
+          <h3>Creators and Coffee</h3>
+          <p><strong>When:</strong> Every Sunday, 8am - 10am</p>
+          <p><strong>Type:</strong> Social</p>
+          <p><strong class="host-needed">HOST NEEDED!</strong></p>
+        </div>
+        <div class="event-list-item">
+          <h3>Rotating Club Meetups</h3>
+          <p><strong>When:</strong> Every Monday, 7pm</p>
+          <p><strong>Type:</strong> Art Club</p>
+          <p>Join rotating club meetups: Fiber Art, Casting, Gem, Photography. Check calendar for specific week's focus.</p>
+        </div>
+        <div class="event-list-item">
+          <h3>Language Exchange</h3>
+          <p><strong>When:</strong> Every Tuesday, 7pm</p>
+          <p><strong>Type:</strong> Social/Education</p>
+          <p><strong class="host-needed">HOST NEEDED!</strong></p>
+        </div>
+        <div class="event-list-item">
+          <h3>Make and Take</h3>
+          <p><strong>When:</strong> Every Wednesday, 7pm</p>
+          <p><strong>Type:</strong> Art</p>
+          <p><strong>Cost:</strong> Varies, $5 - $20</p>
+          <p>Hands-on creative projects like ceramics painting, wire wrapping, screen printing, and more!</p>
+        </div>
+        <div class="event-list-item">
+          <h3>Exploring Creative FOSS (Software Freedom)</h3>
+          <p><strong>Host:</strong> Pending</p>
+          <p><strong>When:</strong> Every Thursday, 7pm - 8pm</p>
+          <p><strong>Where:</strong> Art Lab, Main Stage</p>
+          <p><strong>Category:</strong> Tech</p>
+          <p><strong>Cost:</strong> Free (no registration required)</p>
+        </div>
+        <div class="event-list-item">
+          <h3>Pottery Club</h3>
+          <p><strong>Host:</strong> None/informal</p>
+          <p><strong>When:</strong> Every Thursday, 8pm - 9pm</p>
+          <p><strong>Category:</strong> Art</p>
+          <p><strong>Cost:</strong> Free</p>
+        </div>
+        <div class="event-list-item">
+          <h3>Musicians Meetup</h3>
+          <p><strong>When:</strong> Every Friday, 6pm - 7pm</p>
+          <p><strong>Type:</strong> Social / Performance</p>
+          <p>Stage performances on rotating weeks. Fridays 7pm: live music, dancing, karaoke, open mic sessions!</p>
+        </div>
+        <div class="event-list-item">
+          <h3>Makerspace Improvements!</h3>
+          <p><strong>When:</strong> Every Saturday, 12noon - 7pm</p>
+          <p><strong>Type:</strong> Social/Volunteer</p>
+          <p>Help us improve the space! A great way to meet fellow makers and contribute to the community.</p>
+        </div>
+      </div>
 
-        <div class="text-center">
-            <button id="showFullCalendarBtn" class="btn-primary">Show Full Calendar</button>
-        </div>
+      <div class="text-center">
+        <button id="showFullCalendarBtn" class="btn-primary">Show Full Calendar</button>
+      </div>
 
-        <div id="fullCalendarWrapper" class="full-calendar-wrapper hidden">
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&bgcolor=%23ffffff&mode=MONTH&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%2309d67a" title="Idaho Art Lab Full Events Calendar" loading="lazy"></iframe>
-        </div>
+      <div id="fullCalendarWrapper" class="full-calendar-wrapper hidden">
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&bgcolor=%23ffffff&mode=MONTH&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%2309d67a" title="Idaho Art Lab Full Events Calendar" loading="lazy"></iframe>
+      </div>
     </section>
 
     <section id="makerspace">
-        <h2>Explore The Labs</h2>
-        <div class="lab-grid">
-            <div class="lab-item"><img src="images/ceramiclab.webp" alt="Shelves full of unfinished white ceramic bisque ware" loading="lazy" decoding="async" width="400" height="200"><h3>Ceramics Painting Studio</h3><p>Unleash your creativity on hundreds of ceramic bisque ware pieces. Access our extensive 1,500+ casting mold inventory.</p></div>
-            <div class="lab-item"><img src="images/potterylab.webp" alt="A pottery studio with numerous electric wheels" loading="lazy" decoding="async" width="400" height="200"><h3>Pottery Wheel & Kiln Studio</h3><p>Work on one of our 11 electric pottery wheels, kick wheel, slab roller, or extruder. We offer firing services up to Cone 10.</p></div>
-            <div class="lab-item"><img src="images/sculptinglab.webp" alt="A clay sculpture of a head being worked on" loading="lazy" decoding="async" width="400" height="200"><h3>Sculpture Lab</h3><p>Utilize our ergonomic electric sculptor's tables or sculpture stands to elevate your projects. Clay for sale and firing services available.</p></div>
-            <div class="lab-item"><img src="images/paintinglab.webp" alt="An artist's painting studio with an easel and paints" loading="lazy" decoding="async" width="400" height="200"><h3>Drawing & Painting Studio</h3><p>An inspiring space, free and open to the public. Access our light table, easels, projector, paper cutters, and large project tables.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="A workstation with a tablet displaying digital animation software" loading="lazy" decoding="async" width="400" height="200"><h3>Animation Lab</h3><p>Explore traditional animation with a light table and copy stand, or rent a complete Digital Cartoon Animation Station.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="Colorful polished stones and gems" loading="lazy" decoding="async" width="400" height="200"><h3>Lapidary Studio</h3><p>Transform raw stones into polished works of art with equipment for stone slabbing, trimming, grinding, and polishing.</p></div>
-            <div class="lab-item"><img src="images/3dprintlab.webp" alt="A 3D printer in action creating a white object" loading="lazy" decoding="async" width="400" height="200"><h3>3D Print Lab</h3><p>Bring your digital designs to life with our FDM printers for rapid prototyping, artistic creations, and functional parts.</p></div>
-            <div class="lab-item"><img src="images/metallab.webp" alt="Jewelry making tools on a workbench" loading="lazy" decoding="async" width="400" height="200"><h3>Lost Wax Metal Casting</h3><p>Craft intricate jewelry or small sculptures in metal using our 6 jewelers benches and high-quality centrifuge casting method.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="A person using a squeegee to screen print a design" loading="lazy" decoding="async" width="400" height="200"><h3>Screen Printing Studio</h3><p>Produce fine art serigraphs or custom apparel using our photo emulsion tables, vacuum table, and a 4-color T-Shirt press.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="Linoleum block carving tools and ink" loading="lazy" decoding="async" width="400" height="200"><h3>Block & Monoprinting</h3><p>Explore printmaking by carving linoleum blocks, or experiment with monoprinting using our brayers and gelatin plates.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="A computer with creative software and a green screen behind it" loading="lazy" decoding="async" width="400" height="200"><h3>Digital Art & Media Lab</h3><p>Dive into digital creation with powerful workstations for Photoshop, 3D Rendering, a green screen, and a sound booth.</p></div>
-            <div class="lab-item"><img src="images/photolab.webp" alt="Photographs hanging to dry in a darkroom with a red safelight" loading="lazy" decoding="async" width="400" height="200"><h3>Photography Darkroom</h3><p>Develop your own black and white photography in our large format darkroom. Supports developing negatives up to 4" x 5".</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="Abstract sheets of colored plastic" loading="lazy" decoding="async" width="400" height="200"><h3>Vacuum Forming & Vinyl Baking</h3><p>Form plastic, silicone, or vinyl sheets up to 4x4 feet with our vacuum former, or bake vinyl onto metal for durable finishes.</p></div>
-            <div class="lab-item"><img src="images/gemlab.webp" alt="A professional microphone and headphones in a recording booth" loading="lazy" decoding="async" width="400" height="200"><h3>Podcasting and Video Studio</h3><p>Record, edit, and produce high-quality audio and video content for podcasting, interviews, and green-screen production.</p></div>
+      <h2>Explore The Labs</h2>
+      <div class="lab-grid">
+        <div class="lab-item"><img src="images/ceramiclab.webp" alt="Shelves full of unfinished white ceramic bisque ware" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Ceramics Painting Studio</h3>
+          <p>Unleash your creativity on hundreds of ceramic bisque ware pieces. Access our extensive 1,500+ casting mold inventory.</p>
         </div>
+        <div class="lab-item"><img src="images/potterylab.webp" alt="A pottery studio with numerous electric wheels" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Pottery Wheel & Kiln Studio</h3>
+          <p>Work on one of our 11 electric pottery wheels, kick wheel, slab roller, or extruder. We offer firing services up to Cone 10.</p>
+        </div>
+        <div class="lab-item"><img src="images/sculptinglab.webp" alt="A clay sculpture of a head being worked on" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Sculpture Lab</h3>
+          <p>Utilize our ergonomic electric sculptor's tables or sculpture stands to elevate your projects. Clay for sale and firing services available.</p>
+        </div>
+        <div class="lab-item"><img src="images/paintinglab.webp" alt="An artist's painting studio with an easel and paints" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Drawing & Painting Studio</h3>
+          <p>An inspiring space, free and open to the public. Access our light table, easels, projector, paper cutters, and large project tables.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="A workstation with a tablet displaying digital animation software" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Animation Lab</h3>
+          <p>Explore traditional animation with a light table and copy stand, or rent a complete Digital Cartoon Animation Station.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="Colorful polished stones and gems" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Lapidary Studio</h3>
+          <p>Transform raw stones into polished works of art with equipment for stone slabbing, trimming, grinding, and polishing.</p>
+        </div>
+        <div class="lab-item"><img src="images/3dprintlab.webp" alt="A 3D printer in action creating a white object" loading="lazy" decoding="async" width="400" height="200">
+          <h3>3D Print Lab</h3>
+          <p>Bring your digital designs to life with our FDM printers for rapid prototyping, artistic creations, and functional parts.</p>
+        </div>
+        <div class="lab-item"><img src="images/metallab.webp" alt="Jewelry making tools on a workbench" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Lost Wax Metal Casting</h3>
+          <p>Craft intricate jewelry or small sculptures in metal using our 6 jewelers benches and high-quality centrifuge casting method.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="A person using a squeegee to screen print a design" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Screen Printing Studio</h3>
+          <p>Produce fine art serigraphs or custom apparel using our photo emulsion tables, vacuum table, and a 4-color T-Shirt press.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="Linoleum block carving tools and ink" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Block & Monoprinting</h3>
+          <p>Explore printmaking by carving linoleum blocks, or experiment with monoprinting using our brayers and gelatin plates.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="A computer with creative software and a green screen behind it" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Digital Art & Media Lab</h3>
+          <p>Dive into digital creation with powerful workstations for Photoshop, 3D Rendering, a green screen, and a sound booth.</p>
+        </div>
+        <div class="lab-item"><img src="images/photolab.webp" alt="Photographs hanging to dry in a darkroom with a red safelight" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Photography Darkroom</h3>
+          <p>Develop your own black and white photography in our large format darkroom. Supports developing negatives up to 4" x 5".</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="Abstract sheets of colored plastic" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Vacuum Forming & Vinyl Baking</h3>
+          <p>Form plastic, silicone, or vinyl sheets up to 4x4 feet with our vacuum former, or bake vinyl onto metal for durable finishes.</p>
+        </div>
+        <div class="lab-item"><img src="images/gemlab.webp" alt="A professional microphone and headphones in a recording booth" loading="lazy" decoding="async" width="400" height="200">
+          <h3>Podcasting and Video Studio</h3>
+          <p>Record, edit, and produce high-quality audio and video content for podcasting, interviews, and green-screen production.</p>
+        </div>
+      </div>
     </section>
 
     <section id="membership" class="bg-grey">
-    <h2>Become a Member</h2>
-    <p class="section-intro">Unlock your creative potential and join a vibrant community of fellow artists and makers. Here’s what you get and how to start:</p>
-    
-    <div class="content-grid" style="text-align: left; margin-top: 2rem;">
+      <h2>Become a Member</h2>
+      <p class="section-intro">Unlock your creative potential and join a vibrant community of fellow artists and makers. How to start:</p>
+
+      <div class="content-grid" style="text-align: left; margin-top: 2rem;">
         <!-- Column 1: Benefits -->
         <div>
-            <h3 style="color:var(--teal-dark);">Key Benefits</h3>
-            <ul>
-                <li>Full 24/7 Access to the Makerspace</li>
-                <li>Access to Over $100,000 in Tools and Equipment</li>
-                <li>Free or Discounted Project Supplies</li>
-                <li>Exclusive Members-Only Events</li>
-                <li>Personal Project Storage Space</li>
-                <li>Your space! Change, modify and improve the space.</li>
-            </ul>
+          <h3 style="color:var(--teal-dark);">Key Benefits</h3>
+          <ul>
+            <li>Full 24/7 Access to the Makerspace</li>
+            <li>Access to Over $100,000 in Tools and Equipment</li>
+            <li>Free or Discounted Project Supplies</li>
+            <li>Exclusive Members-Only Events</li>
+            <li>Personal Project Storage Space</li>
+            <li>Your space! Change, modify and improve the space.</li>
+          </ul>
         </div>
         <!-- Column 2: How to Join -->
         <div>
-            <h3 style="color:var(--teal-dark);">How to Start</h3>
-            <ol>
-                <li>Attend a Tour & Induction (Tues/Thurs at 7pm).</li>
-                <li>Complete the required tool safety training.</li>
-                <li>Sign the liability waiver and membership agreement.</li>
-                <li>Pay a one-time <strong>$35 induction fee</strong>.</li>
-                <li>Set up your <strong>$125 monthly membership</strong>.</li>
-            </ol>
+          <h3 style="color:var(--teal-dark);">How to Start</h3>
+          <ol>
+            <li>Attend a Tour & Induction (Tues/Thurs at 7pm).</li>
+            <li>Complete the required tool safety training.</li>
+            <li>Sign the liability waiver and membership agreement.</li>
+            <li>Pay a one-time <strong>$35 induction fee</strong>.</li>
+            <li>Set up your <strong>$125 monthly membership</strong>.</li>
+          </ol>
         </div>
-    </div>
-    
-    <!-- Centered Call to Action Button -->
-    <div class="text-center" style="margin-top: 2rem;">
-         <a href="https://idahoartlab.org/membership.php" target="_blank" rel="noopener noreferrer" class="btn-primary" style="transform: scale(1.1);">View Full Details</a>
-    </div>
-</section>
+      </div>
 
-    <section id="contact">
+      <!-- Centered Call to Action Button -->
+      <div class="text-center" style="margin-top: 2rem;">
+        <a href="https://idahoartlab.org/membership.php" target="_blank" rel="noopener noreferrer" class="btn-primary" style="transform: scale(1.1);">View Full Details</a>
+      </div>
+    </section>
+
+        <section id="contact">
         <h2>Visit The Makerspace</h2>
         <p class="section-intro">Come experience the Idaho Art Lab firsthand! Conveniently located in St. Anthony, Idaho. Drop by during open hours or by appointment.</p>
         <div class="contact-grid">
@@ -265,6 +782,16 @@
                 <p><strong>ADDRESS:</strong><br>2355 S Yellowstone Hwy,<br>St. Anthony, ID, 83445</p>
                 <p><strong>DROP-IN HOURS:</strong><br>Monday - Saturday, 3pm - 7pm<br>(24/7 access for Lab Members)</p>
                 <p><strong>CONTACT:</strong><br>📞 <a href="tel:2089320893">208-932-0893</a><br>✉️ <a href="mailto:info@idahoartlab.org">info@idahoartlab.org</a></p>
+
+                <!-- Social Links Added Here -->
+                <div class="social-links">
+                    <a href="http://www.facebook.com/idahoartlab" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+                    <a href="http://instagram.com/idahoartlab/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i><span class="sr-only">Instagram</span></a>
+                    <a href="http://www.flickr.com/photos/idahoartlab/albums" target="_blank" rel="noopener noreferrer" aria-label="Flickr"><i class="fab fa-flickr"></i><span class="sr-only">Flickr</span></a>
+                    <a href="https://www.youtube.com/channel/UC_kfyeq4aJp5Dtnyv8BYaTg" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i><span class="sr-only">YouTube</span></a>
+                </div>
+                <!-- End Social Links -->
+
             </div>
             <div>
                 <iframe src="https://maps.google.com/maps?q=2355%20S%20Yellowstone%20Hwy%2C%20St.%20Anthony%2C%20ID%2083445&t=&z=15&ie=UTF8&iwloc=&output=embed" class="map-embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -272,15 +799,99 @@
         </div>
     </section>
   </main>
-  
+
   <footer id="donate">
     <p>&copy; 2025 Idaho Art Lab. A 501(c)(3) Non-Profit Organization.</p>
     <p>2355 S Yellowstone Hwy, St Anthony, ID 83445 | <a href="https://idahoartlab.org/donate.php" target="_blank" rel="noopener noreferrer">Donations are tax-deductible</a>.</p>
   </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded',()=>{const e=document.querySelector('.mob-btn'),t=document.querySelector('#drawer'),n=document.body,o=()=>{const t=n.classList.toggle('menu-open');e.setAttribute('aria-expanded',t)};e.addEventListener('click',e=>{e.stopPropagation(),o()}),t.addEventListener('click',e=>{'A'===e.target.tagName&&o()}),document.addEventListener('keydown',e=>{'Escape'===e.key&&n.classList.contains('menu-open')&&o()});const d=document.querySelectorAll('.hero .slide');if(d.length>1){let e=0;const t=6e3;setInterval(()=>{d[e].classList.remove('active'),e=(e+1)%d.length,d[e].classList.add('active')},t)}const l=document.getElementById('showFullCalendarBtn'),a=document.getElementById('fullCalendarWrapper');l&&a&&l.addEventListener('click',()=>{a.classList.remove('hidden'),l.style.display='none',a.scrollIntoView({behavior:'smooth',block:'center'})})});
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.querySelector('.mob-btn');
+    const drawer = document.querySelector('#drawer');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isMenuOpen = body.classList.toggle('menu-open');
+      mobileMenuButton.setAttribute('aria-expanded', isMenuOpen);
+    };
+
+    mobileMenuButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleMenu();
+    });
+
+    drawer.addEventListener('click', (event) => {
+      if (event.target.tagName === 'A') {
+        toggleMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && body.classList.contains('menu-open')) {
+        toggleMenu();
+      }
+    });
+
+    // --- Carousel Logic with Arrows and Auto-play ---
+    const slides = document.querySelectorAll('.hero .slide');
+    const totalSlides = slides.length;
+    let currentSlideIndex = 0;
+
+    // Find the active slide on page load
+    slides.forEach((slide, index) => {
+      if (slide.classList.contains('active')) {
+        currentSlideIndex = index;
+      }
+    });
+
+    const nextSlide = () => {
+      slides[currentSlideIndex].classList.remove('active');
+      currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+      slides[currentSlideIndex].classList.add('active');
+    };
+
+    const prevSlide = () => {
+      slides[currentSlideIndex].classList.remove('active');
+      currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+      slides[currentSlideIndex].classList.add('active');
+    };
+
+    // Add click listeners to the navigation arrows
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+    // Automatic slide transition setup
+    const autoSlideInterval = 6000; // Change slide every 6 seconds
+    let autoSlideTimer = setInterval(nextSlide, autoSlideInterval);
+
+    // Pause auto-slide on hover and resume on mouseleave
+    const heroSection = document.querySelector('.hero');
+    heroSection.addEventListener('mouseenter', () => {
+      clearInterval(autoSlideTimer);
+    });
+    heroSection.addEventListener('mouseleave', () => {
+      autoSlideTimer = setInterval(nextSlide, autoSlideInterval);
+    });
+    // --- End Carousel Logic ---
+
+
+    // Existing logic for showing the full calendar
+    const showFullCalendarBtn = document.getElementById('showFullCalendarBtn');
+    const fullCalendarWrapper = document.getElementById('fullCalendarWrapper');
+    if (showFullCalendarBtn && fullCalendarWrapper) {
+      showFullCalendarBtn.addEventListener('click', () => {
+        fullCalendarWrapper.classList.remove('hidden');
+        showFullCalendarBtn.style.display = 'none'; // Hide the button after clicking
+        fullCalendarWrapper.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      });
+    }
+  });
 </script>
 
 </body>
+
 </html>
