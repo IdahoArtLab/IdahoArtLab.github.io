@@ -17,8 +17,13 @@
 
   <style>
     :root {
-      --teal: #007a86;
-      --teal-dark: #005a63;
+      --main-color: #5784cc;
+      --orange: #f9a72b;
+      --teal: #37ab9c;
+      --purple: #6243a4;
+      --green: #80cc28;
+      --teal: var(--main-color); 
+      --teal-dark: #3e6ab1;
       --grey-500: #555;
       --grey-300: #eaeaea;
       --border: #d1d1d1;
@@ -509,7 +514,9 @@
 
 <body>
   <header>
-    <a id="brand" href="#">Idaho Art Lab</a>
+    <div id="brand">
+    <a href="#"><img src="logo.png" alt="Idaho Art Lab Logo" width="125" height="39" style="height:auto;"></a>
+  </div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
@@ -797,9 +804,10 @@
   </main>
 
   <footer id="donate">
-    <p>&copy; 2025 Idaho Art Lab. A 501(c)(3) Non-Profit Organization.</p>
-    <p>2355 S Yellowstone Hwy, St Anthony, ID 83445 | <a href="https://idahoartlab.org/donate.php" target="_blank" rel="noopener noreferrer">Donations are tax-deductible</a>.</p>
-  </footer>
+  <img src="logo.png" alt="Idaho Art Lab Logo" width="250" height="78" style="height:auto; margin: 0 auto 1rem auto;">
+  <p>&copy; 2025 Idaho Art Lab. A 501(c)(3) Non-Profit Organization.</p>
+  <p>2355 S Yellowstone Hwy, St Anthony, ID 83445 | <a href="https://idahoartlab.org/donate.php" target="_blank" rel="noopener noreferrer">Donations are tax-deductible</a>.</p>
+</footer>
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
